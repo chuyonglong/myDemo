@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "776434974492",
+    "project_id": "fir-55d15",
+    "storage_bucket": "fir-55d15.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:776434974492:android:8734f79f8247a3522704d9",
+        "android_client_info": {
+          "package_name": "com.example.glidedemo.a"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC6fJ9D8s7GSUCLmm8IzrJrAwOHeSS5xwc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

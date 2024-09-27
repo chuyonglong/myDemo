@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tool="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#2c2c2c"
+    android:fitsSystemWindows="true">
+
+    <com.example.glidedemo.views.GradientTextView
+        android:id="@+id/led_clock_title"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:paddingHorizontal="15dp"
+        android:text="液晶时钟"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:endColor="#Ffffff"
+        app:layout_constraintTop_toTopOf="parent"
+        app:startColor="#F30808" />
+
+
+    <com.example.glidedemo.views.LedClockView
+        android:id="@+id/led_clock_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/led_clock_title"
+        app:timingType="clock" />
+
+
+    <TextView
+        android:id="@+id/start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_15_radius"
+        android:backgroundTint="@color/white"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="8dp"
+        android:text="start"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/led_clock_time" />
+
+    <TextView
+        android:id="@+id/end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_15_radius"
+        android:backgroundTint="@color/white"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="8dp"
+        android:text="end"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/start"
+        app:layout_constraintTop_toBottomOf="@+id/led_clock_time" />
+
+    <TextView
+        android:id="@+id/countdown_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_15_radius"
+        android:backgroundTint="@color/white"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="8dp"
+        android:text="countdown_start"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/countdown_end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/start" />
+
+    <TextView
+        android:id="@+id/countdown_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_15_radius"
+        android:backgroundTint="@color/white"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="8dp"
+        android:text="countdown_end"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/countdown_start"
+        app:layout_constraintTop_toBottomOf="@+id/start" />
+
+    <TextView
+        android:id="@+id/count_up_start"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_15_radius"
+        android:backgroundTint="@color/white"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="8dp"
+        android:text="count_up_start"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toStartOf="@+id/count_up_end"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/countdown_start" />
+
+    <TextView
+        android:id="@+id/count_up_end"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_15_radius"
+        android:backgroundTint="@color/white"
+        android:paddingHorizontal="24dp"
+        android:paddingVertical="8dp"
+        android:text="count_up_end"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/count_up_start"
+        app:layout_constraintTop_toBottomOf="@+id/countdown_start" />
+
+    <com.example.glidedemo.views.EdgeLightView
+        android:id="@+id/edge_light_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

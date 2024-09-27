@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/cat"
+        android:shortcutLongLabel="@string/zmkm"
+        android:shortcutShortLabel="@string/one"
+        android:shortcutId="one">
+        <intent
+            android:action="android.intent.action.VIEW"
+            android:targetClass="com.example.glidedemo.activity.SecondActivity"
+            android:targetPackage="com.example.glidedemo" />
+        <categories android:name="android.shortcut.conversation" />
+    </shortcut>
+
+</shortcuts>

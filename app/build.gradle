@@ -1,0 +1,141 @@
+import com.github.megatronking.stringfog.plugin.kg.RandomKeyGenerator
+import com.github.megatronking.stringfog.plugin.StringFogMode
+
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id "com.google.gms.google-services"
+    id 'stringfog'
+    id 'com.bytedance.android.aabResGuard'
+}
+
+android {
+    buildToolsVersion = "34.0.0"
+    namespace 'com.example.glidedemo'
+    compileSdk 34
+
+    defaultConfig {
+        applicationId "com.example.glidedemo.a"
+        minSdk 24
+        targetSdk 34
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+    signingConfigs {
+        release {
+            keyAlias "glidedemo"
+            keyPassword "123456"
+            storeFile file("../key_store_test.jks")
+            storePassword "123456"
+        }
+    }
+
+    buildTypes {
+        debug {
+            debuggable = true
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+    kotlinOptions {
+        jvmTarget = '17'
+    }
+    buildFeatures {
+        viewBinding = true
+        buildConfig = true
+    }
+
+
+    stringfog {
+        // 必要：加解密库的实现类路径，需和上面配置的加解密算法库一致。
+        implementation 'com.github.megatronking.stringfog.xor.StringFogImpl'
+        // 可选：StringFog会自动尝试获取packageName，如果遇到获取失败的情况，可以显式地指定。
+        packageName 'com.github.megatronking.stringfog.app'
+        // 可选：加密开关，默认开启。
+        enable true
+        // 可选：指定需加密的代码包路径，可配置多个，未指定将默认全部加密。
+        fogPackages = ['com.example.glidedemo']
+        // 可选（3.0版本新增）：指定密钥生成器，默认使用长度8的随机密钥（每个字符串均有不同随机密钥）,
+        // 也可以指定一个固定的密钥：HardCodeKeyGenerator("This is a key")
+        kg new RandomKeyGenerator()
+        // 可选（4.0版本新增）：用于控制字符串加密后在字节码中的存在形式, 默认为base64，
+        // 也可以使用text或者bytes
+        mode StringFogMode.bytes
+    }
+
+    aabResGuard {
+        mappingFile = file("mapping.txt").toPath() // Mapping file used for incremental obfuscation
+        whiteList = [ // White list rules
+                      "*.R.raw.*",
+                      "*.R.drawable.icon",
+                      "*.R.string.default_web_client_id",
+                      "*.R.string.firebase_database_url",
+                      "*.R.string.gcm_defaultSenderId",
+                      "*.R.string.google_api_key",
+                      "*.R.string.google_app_id",
+                      "*.R.string.google_crash_reporting_api_key",
+                      "*.R.string.google_storage_bucket",
+                      "*.R.string.project_id",
+                      "*.R.string.com.crashlytics.android.build_id",
+                      "*.R.string.google_admob_app_id",
+                      "*.R.string.facebook_app_id",
+                      "*.R.string.fb_login_protocol_scheme",
+                      "*.R.string.facebook_client_token",
+                      "*.R.string.com.google.firebase.crashlytics.mapping_file_id",]
+        obfuscatedBundleFileName = "app_build.aab" // Obfuscated file name, must end with '.aab'
+        mergeDuplicatedRes = true // Whether to allow the merge of duplicate resources
+        enableFilterFiles = true // Whether to allow filter files
+        filterList = [ // file filter rules
+                       "META-INF/*",
+                       "BUNDLE-METADATA/*"]
+
+        enableFilterStrings = false // switch of filter strings
+        unusedStringPath = file("unused.txt").toPath() // strings will be filtered in this file
+        languageWhiteList = ["en", "ar", "de", "es", "fr", "hi", "in", "ja", "ko", "pt", "th"]
+    }
+
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.13.1'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    implementation 'com.google.android.gms:play-services-maps:19.0.0'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    api "com.google.code.gson:gson:2.10.1"
+    implementation 'androidx.core:core-splashscreen:1.0.1'
+    implementation 'com.tencent:mmkv:1.3.2'
+
+    //firebase
+    implementation "com.google.firebase:firebase-messaging:24.0.1"
+    implementation "com.google.android.gms:play-services-base:18.5.0"
+    implementation platform('com.google.firebase:firebase-bom:33.3.0')
+    implementation 'com.google.firebase:firebase-analytics'
+    //appmetrica
+    implementation 'io.appmetrica.analytics:analytics:7.0.0'
+
+    //stringFog
+    implementation 'com.github.megatronking.stringfog:xor:5.0.0'
+
+    //appsflyer
+    implementation 'com.appsflyer:af-android-sdk:6.15.1'
+    implementation "com.android.installreferrer:installreferrer:2.2"
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+    implementation project(':shinebuttonlib')
+
+}

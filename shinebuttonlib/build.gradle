@@ -1,0 +1,34 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 34
+    namespace 'com.sackcentury.shinebuttonlib'
+    defaultConfig {
+        minSdkVersion 24
+        targetSdk 34
+        versionCode 9
+        versionName "0.1.9"
+
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    testImplementation 'junit:junit:4.13.2'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+//    implementation 'com.daasuu:EasingInterpolator:1.3.0'
+
+    implementation project(':EasingInterpolator')
+}
+
+//apply from: '../gradle-mvn-push.gradle'

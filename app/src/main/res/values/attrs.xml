@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="GradientTextView">
+        <attr name="startColor" format="color" />
+        <attr name="endColor" format="color" />
+        <attr name="gradientDirection">
+            <enum name="horizontal" value="0" />
+            <enum name="vertical" value="1" />
+        </attr>
+    </declare-styleable>
+
+    <declare-styleable name="SignalView">
+        <attr name="signal_maximum" format="reference|integer" /><!--信号柱数量-->
+        <attr name="signal_level" format="integer" /><!--信号等级-->
+        <attr name="primary_color" format="reference|color" /><!--无信号颜色-->
+        <attr name="level_color" format="reference|color" /><!--有信号颜色-->
+        <attr name="spacing" format="integer" /><!--间隙-->
+        <attr name="unit_width" format="integer" /><!--信号柱宽度-->
+        <attr name="connected" format="boolean" /><!--链接状态-->
+        <attr name="shadow_color" format="reference|color" /><!--阴影颜色-->
+        <attr name="shadow_open" format="boolean" /><!--打开阴影-->
+
+    </declare-styleable>
+
+    <declare-styleable name="LedClockView">
+        <attr name="timingType">
+            <enum name="clock" value="0" />
+            <enum name="countingUp" value="1" />
+            <enum name="countingDown" value="2" />
+        </attr>
+        <attr name="countdownTime" format="float" />
+
+    </declare-styleable>
+
+    <declare-styleable name="TagFlowLayout">
+        <attr name="max_select" format="integer" />
+        <attr name="tag_gravity">
+            <enum name="left" value="-1" />
+            <enum name="center" value="0" />
+            <enum name="right" value="1" />
+        </attr>
+    </declare-styleable>
+</resources>
