@@ -35,7 +35,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
 
     private val mVals by lazy {
         arrayOf(
-            "相机", "液晶时钟", "健康", "连接", "外部activity", "媒体", "点赞"
+            "相机", "液晶时钟", "健康", "连接", "外部activity", "媒体", "点赞", "room数据库"
         )
     }
 
@@ -231,8 +231,12 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             5 -> {
                 startActivity(Intent(this, MediaActivity::class.java))
             }
+
             6 -> {
                 startActivity(Intent(this, LikeActivity::class.java))
+            }
+            7 -> {
+                startActivity(Intent(this, RoomActivity::class.java))
             }
 
 

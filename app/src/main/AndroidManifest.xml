@@ -66,7 +66,7 @@
 
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
-        <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
     <!--    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />-->
     <!--    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />-->
     <!--    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />-->
@@ -165,8 +165,9 @@
             android:name="com.example.glidedemo.activity.LikeActivity"
             android:theme="@style/AppTheme" />
 
-
-
+        <activity
+            android:name="com.example.glidedemo.activity.RoomActivity"
+            android:theme="@style/AppTheme" />
 
 
     </application>

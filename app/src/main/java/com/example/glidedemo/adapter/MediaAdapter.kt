@@ -1,8 +1,10 @@
 package com.example.glidedemo.adapter
 
 import android.annotation.SuppressLint
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.glidedemo.base.BaseAdapter
@@ -96,7 +98,7 @@ class MediaAdapter : BaseAdapter() {
     inner class TitleViewHolder(private val binding: ItemTitleBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bindView(mediaTitle: MediaTitle) {
-            binding.title.text = mediaTitle.title
+            binding.itemRoomText.text = mediaTitle.title
         }
     }
 

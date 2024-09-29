@@ -24,18 +24,18 @@ class GradientTextView(
     private var mTextMatrix: Matrix? = null
 
     @ColorInt
-    private var mStartColor: Int = 0xFF333333.toInt()
+    var startColor: Int = 0xFF333333.toInt()
 
     @ColorInt
-    private var mEndColor: Int = 0xFF333333.toInt()
+    var endColor: Int = 0xFF333333.toInt()
 
     private var mGradientDirection: GradientDirection = GradientDirection.HORIZONTAL
 
     init {
         if (attrs != null) {
             val attrArray = getContext().obtainStyledAttributes(attrs, R.styleable.GradientTextView)
-            mStartColor = attrArray.getColor(R.styleable.GradientTextView_startColor, mStartColor)
-            mEndColor = attrArray.getColor(R.styleable.GradientTextView_endColor, mEndColor)
+            startColor = attrArray.getColor(R.styleable.GradientTextView_startColor, startColor)
+            endColor = attrArray.getColor(R.styleable.GradientTextView_endColor, endColor)
             mGradientDirection =
                 when (attrArray.getInt(R.styleable.GradientTextView_gradientDirection, 0)) {
                     0 -> GradientDirection.HORIZONTAL
@@ -89,7 +89,7 @@ class GradientTextView(
                 0f,
                 w.toFloat(),
                 0f,
-                intArrayOf(mStartColor, mEndColor),
+                intArrayOf(startColor, endColor),
                 null,
                 Shader.TileMode.CLAMP
             )
@@ -99,7 +99,7 @@ class GradientTextView(
                 0f,
                 0f,
                 h.toFloat(),
-                intArrayOf(mStartColor, mEndColor),
+                intArrayOf(startColor, endColor),
                 null,
                 Shader.TileMode.CLAMP
             )
