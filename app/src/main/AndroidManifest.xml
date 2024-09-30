@@ -168,6 +168,12 @@
         <activity
             android:name="com.example.glidedemo.activity.RoomActivity"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.glidedemo.activity.ListAdapterActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.glidedemo.activity.MediaListActivity"
+            android:theme="@style/AppTheme" />
 
 
     </application>

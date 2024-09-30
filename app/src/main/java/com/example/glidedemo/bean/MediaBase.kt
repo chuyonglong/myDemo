@@ -13,7 +13,7 @@ package com.example.glidedemo.bean
 //}
 
 
-abstract class MediaBase()
+open class MediaBase
 
 
 data class MediaData(
