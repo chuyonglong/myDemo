@@ -35,5 +35,10 @@ class LedClockActivity : BaseActivity() {
             binding.ledClockTime.timingType = 1
             binding.ledClockTime.start()
         }
+
+        binding.back.setOnClickListener {
+            setResult(RESULT_OK)
+            finish()
+        }
     }
 }

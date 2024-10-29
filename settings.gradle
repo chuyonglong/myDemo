@@ -22,3 +22,5 @@ rootProject.name = "AndroidDemo"
 include ':app'
 include ':shinebuttonlib'
 include ':EasingInterpolator'
+include ':subsampling'
+include ':GestureViews'

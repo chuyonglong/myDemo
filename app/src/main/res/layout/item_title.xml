@@ -10,6 +10,7 @@
     android:backgroundTint="@color/white"
     android:paddingHorizontal="20dp"
     android:paddingVertical="8dp"
+    android:textColor="@color/white"
     app:endColor="@color/purple"
     app:layout_constraintStart_toStartOf="parent"
     app:layout_constraintTop_toTopOf="parent"

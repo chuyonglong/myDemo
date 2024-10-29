@@ -17,6 +17,19 @@
         app:layout_constraintTop_toTopOf="parent"
         app:startColor="@color/red" />
 
+    <TextView
+        android:id="@+id/tips_adapter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_15_radius"
+        android:gravity="center"
+        android:paddingVertical="15dp"
+        android:text="去 room数据库 按钮添加数据"
+        android:textColor="#2c2c2c"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/list_adapter_title" />
+
+
     <com.example.glidedemo.views.GradientTextView
         android:id="@+id/list_adapter_get_data"
         android:layout_width="wrap_content"
@@ -30,7 +43,7 @@
         app:endColor="@color/yellow"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/list_adapter_title"
+        app:layout_constraintTop_toBottomOf="@+id/tips_adapter"
         app:startColor="@color/red" />
 
 

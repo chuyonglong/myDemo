@@ -11,7 +11,7 @@
         android:id="@+id/led_clock_title"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:gravity="center_vertical"
+        android:gravity="center"
         android:orientation="vertical"
         android:paddingHorizontal="15dp"
         android:text="液晶时钟"
@@ -20,6 +20,20 @@
         app:endColor="#Ffffff"
         app:layout_constraintTop_toTopOf="parent"
         app:startColor="#F30808" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/back"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="20dp"
+        android:padding="15dp"
+        android:src="@drawable/ic_back"
+        app:layout_constraintBottom_toBottomOf="@+id/led_clock_title"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/led_clock_title"
+
+        />
 
 
     <com.example.glidedemo.views.LedClockView
@@ -138,6 +152,10 @@
     <com.example.glidedemo.views.EdgeLightView
         android:id="@+id/edge_light_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

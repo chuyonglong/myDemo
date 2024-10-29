@@ -1,8 +1,10 @@
 package com.example.glidedemo.activity
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
@@ -10,21 +12,31 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
-import com.example.glidedemo.R
+import androidx.lifecycle.lifecycleScope
 import com.example.glidedemo.base.BaseActivity
+import com.example.glidedemo.bean.MediaBase
+import com.example.glidedemo.bean.MediaData
+import com.example.glidedemo.bean.Medium
 import com.example.glidedemo.databinding.ActivityMainBinding
 import com.example.glidedemo.databinding.FlowlayoutTextBinding
 import com.example.glidedemo.foreground.services.CameraService
 import com.example.glidedemo.foreground.services.ConnectedDeviceService
 import com.example.glidedemo.foreground.services.HealthService
+import com.example.glidedemo.permission.GalleryPermissionUtils
+import com.example.glidedemo.utils.MediaQueryForPermission
 import com.example.glidedemo.views.flowlayout.FlowLayout
 import com.example.glidedemo.views.flowlayout.TagAdapter
 import com.example.glidedemo.views.flowlayout.TagFlowLayout
 import com.tencent.mmkv.MMKV
 import io.appmetrica.analytics.AppMetrica
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.util.ArrayList
 
 
 class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
@@ -45,11 +57,21 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "room数据库",
             "list adapter",
             "media list adapter",
+            "setresult",
+            "临时权限",
+            "全屏显示图片(未完成)",
+            "密码锁",
+            "后台拍照无预览相机",
         )
     }
 
+
     private val requestPermissionLauncher: ActivityResultLauncher<Array<String>> =
         registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            Log.d(
+                "223366",
+                "registerForActivityResult: ----registerForActivityResult---registerForActivityResult---registerForActivityResult"
+            )
             // 处理权限请求结果
             val fineLocationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
             val coarseLocationGranted =
@@ -66,6 +88,9 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d(
+            "223366", "onCreate: ----onCreate---onCreate---onCreate"
+        )
         MMKV.initialize(this)
         setContentView(binding.root)
         initFlowLayout()
@@ -77,6 +102,20 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             setOnSelectListener(this@MainActivity)
         }
 
+    }
+
+    override fun onStart() {
+        super.onStart()
+        Log.d(
+            "223366", "onStart: ----onStart---onStart---onStart"
+        )
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Log.d(
+            "223366", "onResume: ----onResume---onResume---onResume"
+        )
     }
 
 
@@ -100,6 +139,18 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
         }
     }
 
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == 1001) {
+            Log.d(
+                "223366",
+                "onActivityResult: ----onActivityResult---onActivityResult---onActivityResult"
+            )
+        }
+
+
+    }
 
     /**
      * 相机权限
@@ -257,10 +308,103 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
                 startActivity(Intent(this, MediaListActivity::class.java))
             }
 
+            10 -> {
+                startActivityForResult(Intent(this, LedClockActivity::class.java), 1001)
+            }
 
+            11 -> {
+                // :    这里的问题是之前 MediaStore.Images.Media.EXTERNAL_CONTENT_URI 选错了
+//                val path = "/storage/emulated/0/svg/Cat.svg"
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val list: MutableList<MediaBase> =
+                        MediaQueryForPermission.queryAllData(this@MainActivity)
+                    list.getOrNull(0)?.let {
+                        withContext(Dispatchers.Main) {
+                            val uri = Uri.withAppendedPath(
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                                ((it as MediaData).id).toString()
+                            )
+                            val writeRequest = MediaStore.createWriteRequest(
+                                contentResolver, mutableListOf<Uri>(uri)
+                            ).intentSender
+                            moveVaultLauncher.launch(
+                                IntentSenderRequest.Builder(writeRequest).build()
+                            )
+                        }
+                    }
+
+                }
+            }
+
+            12 -> {
+                val permissionEnum = GalleryPermissionUtils.checkMediaPermissionResult(this)
+                if (permissionEnum == GalleryPermissionUtils.PermissionEnum.NO_PERMISSIONS) {
+                    Toast.makeText(
+                        this@MainActivity, "没有权限----,请求权限!!!", Toast.LENGTH_SHORT
+                    ).show()
+                    GalleryPermissionUtils.requestMediaPermissions(mediaPermissionLauncher)
+                } else {
+                    goPhotoDetailActivity()
+                }
+
+            }
+
+            13 -> {
+                startActivity(Intent(this, VaultActivity::class.java))
+            }
+            14 -> {
+                startActivity(Intent(this, BackgroundCameraActivity::class.java))
+            }
         }
         return true
     }
 
+
+    private val moveVaultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                Toast.makeText(this, "请求权限成功", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    /**
+     * 获取 数据跳转PhotoDetailActivity
+     */
+
+    private fun goPhotoDetailActivity() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val list: MutableList<MediaBase> =
+                MediaQueryForPermission.queryAllData(this@MainActivity)
+
+            if (list.isEmpty()) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@MainActivity, "没有数据,别点了!!!", Toast.LENGTH_SHORT
+                    ).show()
+                }
+                return@launch
+            }
+
+            val finalLt: ArrayList<MediaBase> = if (list.size < 10) {
+                ArrayList(list)
+            } else {
+                ArrayList(list.subList(0, 10))
+            }
+            Intent(this@MainActivity, PhotoDetailActivity::class.java).apply {
+                putExtra("detail_list_data", finalLt)
+                startActivity(this)
+            }
+        }
+    }
+
+    /**
+     * 媒体权限回调
+     */
+    private val mediaPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            if (it.isNotEmpty()) {
+                goPhotoDetailActivity()
+            }
+        }
 
 }

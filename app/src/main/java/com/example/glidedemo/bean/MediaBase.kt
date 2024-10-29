@@ -1,5 +1,7 @@
 package com.example.glidedemo.bean
 
+import java.io.Serializable
+
 //sealed class MediaBase(val type:Int = 0){
 //    data class MediaData(
 //        var id: Long?,
@@ -13,7 +15,7 @@ package com.example.glidedemo.bean
 //}
 
 
-open class MediaBase
+open class MediaBase :Serializable
 
 
 data class MediaData(

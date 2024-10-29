@@ -38,7 +38,7 @@
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
 
-
+    <!--相机权限-->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
 
@@ -173,6 +173,15 @@
             android:theme="@style/AppTheme" />
         <activity
             android:name="com.example.glidedemo.activity.MediaListActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.glidedemo.activity.PhotoDetailActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.glidedemo.activity.VaultActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.glidedemo.activity.BackgroundCameraActivity"
             android:theme="@style/AppTheme" />
 
 

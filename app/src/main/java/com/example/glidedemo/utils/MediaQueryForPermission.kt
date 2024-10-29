@@ -3,6 +3,7 @@ package com.example.glidedemo.utils
 import android.content.Context
 import android.provider.MediaStore.Images
 import android.provider.MediaStore.Video
+import android.util.Log
 import com.example.glidedemo.bean.MediaBase
 import com.example.glidedemo.bean.MediaData
 import com.example.glidedemo.bean.MediaListData
@@ -87,7 +88,7 @@ object MediaQueryForPermission {
             val lastModifiedColumnIndex = cursor.getColumnIndexOrThrow(Images.Media.DATE_MODIFIED)
             val sizeColumnIndex = cursor.getColumnIndexOrThrow(Images.Media.SIZE)
             val idColumnIndex = cursor.getColumnIndexOrThrow(Images.Media._ID)
-
+            var aa = true
             while (cursor.moveToNext()) {
 
                 val path = cursor.getString(pathColumnIndex)
@@ -95,6 +96,15 @@ object MediaQueryForPermission {
                 val lastModified = cursor.getLong(lastModifiedColumnIndex) * 1000
                 val size = cursor.getLong(sizeColumnIndex)
                 val id: Long = cursorImages.getLong(idColumnIndex)
+                if (aa) {
+                    Log.d("223366", "queryAllData: ----${path}")
+                    Log.d("223366", "queryAllData: ----${id}")
+                    aa = false
+                }
+                if (path.contains("300Mpng.png")) {
+                    Log.d("223366", "queryAllData-1: ----${path}")
+                    Log.d("223366", "queryAllData-1: ----${id}")
+                }
                 val medium = MediaListData(
                     id, path, lastModified, dateAdded, size, null, itemType = ItemTypeEnum.DATA
                 )
