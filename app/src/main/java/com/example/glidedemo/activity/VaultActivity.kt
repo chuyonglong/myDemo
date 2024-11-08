@@ -9,6 +9,7 @@ import com.example.glidedemo.base.BaseActivity
 import com.example.glidedemo.databinding.ActivityVaultBinding
 import com.example.glidedemo.views.pattern_locker.OnPatternChangeListener
 import com.example.glidedemo.views.pattern_locker.PatternLockerView
+import com.example.glidedemo.views.pinlockview.PinLockListener
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -52,6 +53,9 @@ class VaultActivity : BaseActivity() {
         } else {
 
         }
+
+        binding.pinLockView.attachIndicatorDots(binding.indicatorDots)
+        binding.pinLockView.setPinLockListener(pinLockListener)
     }
 
     private fun initPatternLockerAction() {
@@ -97,6 +101,18 @@ class VaultActivity : BaseActivity() {
             }
 
         })
+    }
+
+
+    private val pinLockListener: PinLockListener = object : PinLockListener {
+        override fun onComplete(pin: String) {
+
+        }
+
+        override fun onEmpty() {}
+
+        override fun onPinChange(pinLength: Int, intermediatePin: String?) {}
+
     }
 
 

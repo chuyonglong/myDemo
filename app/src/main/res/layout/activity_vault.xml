@@ -7,46 +7,92 @@
     android:background="@color/white"
     android:fitsSystemWindows="true">
 
-    <TextView
-        android:id="@+id/lockTips"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="sans-serif-medium"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/lockTipsFourDots"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="请绘制提示" />
-
-    <TextView
-        android:id="@+id/lockTipsFourDots"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
-        android:fontFamily="sans-serif-medium"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintBottom_toTopOf="@+id/lockerView"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:text="请绘制四个或者更多点" />
-
-
-    <com.example.glidedemo.views.pattern_locker.PatternLockerView
-        android:id="@+id/lockerView"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/pattern_lock_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginHorizontal="65dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintDimensionRatio="1:1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:plv_enableAutoClean="true"
-        app:plv_color="#80B3D2FF"
-        app:plv_enableHapticFeedback="true"
-        app:plv_fillColor="#B3D2FF" />
+        android:layout_height="match_parent"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/lockTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/lockTipsFourDots"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="请绘制提示" />
+
+        <TextView
+            android:id="@+id/lockTipsFourDots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:fontFamily="sans-serif-medium"
+            android:textColor="@color/black"
+            android:textSize="16sp"
+            app:layout_constraintBottom_toTopOf="@+id/lockerView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="请绘制四个或者更多点" />
+
+
+        <com.example.glidedemo.views.pattern_locker.PatternLockerView
+            android:id="@+id/lockerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginHorizontal="65dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:plv_color="#80B3D2FF"
+            app:plv_enableAutoClean="true"
+            app:plv_enableHapticFeedback="true"
+            app:plv_fillColor="#B3D2FF" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <!--            app:dotErrorBackground="@drawable/ic_lock_dot_error"-->
+        <com.example.glidedemo.views.pinlockview.IndicatorDots
+            android:id="@+id/indicator_dots"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="180dp"
+            android:layout_marginBottom="8dp"
+            app:dotDiameter="20dp"
+            app:dotEmptyBackground="@drawable/bg_dot_empty"
+            app:dotFilledBackground="@drawable/bg_dot_filled"
+            app:dotErrorBackground="@drawable/bg_dot_error"
+            app:dotSpacing="15dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.example.glidedemo.views.pinlockview.PinLockView
+            android:id="@+id/pin_lock_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="42dp"
+            android:paddingHorizontal="44dp"
+            app:keypadButtonSize="72dp"
+            app:keypadDeleteButtonPressedColor="?android:attr/textColorPrimary"
+            app:keypadDeleteButtonSize="34dp"
+            app:keypadShowDeleteButton="true"
+            app:keypadTextColor="@color/black"
+            app:keypadTextSize="34sp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:pinLength="6" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
