@@ -8,6 +8,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -23,6 +24,7 @@ import com.example.glidedemo.bean.MediaData
 import com.example.glidedemo.bean.Medium
 import com.example.glidedemo.databinding.ActivityMainBinding
 import com.example.glidedemo.databinding.FlowlayoutTextBinding
+import com.example.glidedemo.extensions.PERMISSION_STRING_TYPE
 import com.example.glidedemo.foreground.services.CameraService
 import com.example.glidedemo.foreground.services.ConnectedDeviceService
 import com.example.glidedemo.foreground.services.HealthService
@@ -62,6 +64,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "全屏显示图片(未完成)",
             "密码锁",
             "后台拍照无预览相机",
+            "权限引导",
         )
     }
 
@@ -352,12 +355,33 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             13 -> {
                 startActivity(Intent(this, VaultActivity::class.java))
             }
+
             14 -> {
                 startActivity(Intent(this, BackgroundCameraActivity::class.java))
+            }
+
+            15 -> {
+                goUsagePermissionSetting()
             }
         }
         return true
     }
+
+
+    private fun goUsagePermissionSetting() {
+        val intent = Intent(
+            this@MainActivity, PermissionSettingActivity::class.java
+        ).apply {
+            putExtra(PERMISSION_STRING_TYPE, Settings.ACTION_USAGE_ACCESS_SETTINGS)
+        }
+        permissionUsageAccessActivityResultLauncher.launch(intent)
+    }
+
+    private val permissionUsageAccessActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+
+        }
 
 
     private val moveVaultLauncher =

@@ -86,6 +86,10 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
+    <uses-permission
+        android:name="android.permission.PACKAGE_USAGE_STATS"
+        tools:ignore="ProtectedPermissions" />
+
 
     <application
         android:name="com.example.glidedemo.App"
@@ -183,6 +187,16 @@
         <activity
             android:name="com.example.glidedemo.activity.BackgroundCameraActivity"
             android:theme="@style/AppTheme" />
+
+        <activity
+            android:name="com.example.glidedemo.activity.PermissionSettingActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.glidedemo.activity.PermissionGuideActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:launchMode="singleTask"
+            android:theme="@style/permission_style" />
 
 
     </application>
