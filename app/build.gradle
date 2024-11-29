@@ -140,6 +140,8 @@ dependencies {
     implementation project(':shinebuttonlib')
     implementation project(':subsampling')
     implementation project(':GestureViews')
+    implementation 'com.google.android.material:material:1.6.0'
+    implementation project(':guideview')
 
     def room_version = "2.6.1"
     implementation "androidx.room:room-runtime:$room_version"

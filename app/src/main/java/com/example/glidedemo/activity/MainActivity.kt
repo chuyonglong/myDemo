@@ -2,6 +2,7 @@ package com.example.glidedemo.activity
 
 import android.Manifest
 import android.app.Activity
+import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -16,8 +17,10 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
+import com.example.glidedemo.R
 import com.example.glidedemo.base.BaseActivity
 import com.example.glidedemo.bean.MediaBase
 import com.example.glidedemo.bean.MediaData
@@ -36,6 +39,7 @@ import com.example.glidedemo.views.flowlayout.TagFlowLayout
 import com.tencent.mmkv.MMKV
 import io.appmetrica.analytics.AppMetrica
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.ArrayList
@@ -65,6 +69,13 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "密码锁",
             "后台拍照无预览相机",
             "权限引导",
+            "吸顶",
+            "新手引导",
+            "ShapeableImageView",
+            "字体大小测试",
+            "Flow 布局",
+            "全屏通知",
+            "使用桌面背景"
         )
     }
 
@@ -362,6 +373,36 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
 
             15 -> {
                 goUsagePermissionSetting()
+            }
+
+            16 -> {
+                startActivity(Intent(this, CeilingActivity::class.java))
+            }
+
+            17 -> {
+                startActivity(Intent(this, GuideViewActivity::class.java))
+
+            }
+
+            18 -> {
+                // TODO:  ShapeableImageView
+            }
+
+            19 -> {
+                // TODO:  字体大小测试
+            }
+
+            20 -> {
+                // TODO:  Flow 布局
+            }
+
+            21 -> {
+                startActivity(Intent(this, FullscreenNotificationActivity::class.java))
+
+            }
+
+            22-> {
+                  //  https://blog.csdn.net/zhyooo123/article/details/6698567
             }
         }
         return true
