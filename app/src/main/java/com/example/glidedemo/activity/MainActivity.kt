@@ -12,6 +12,7 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import android.view.View
+import android.view.WindowManager
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
@@ -76,7 +77,8 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "Flow 布局",
             "全屏通知",
             "使用桌面背景",
-            "使tabLayout优化"
+            "使tabLayout优化",
+            "透明activity"
         )
     }
 
@@ -103,9 +105,9 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(
-            "223366", "onCreate: ----onCreate---onCreate---onCreate"
-        )
+        // 显示壁纸
+        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER)
+
         MMKV.initialize(this)
         setContentView(binding.root)
         initFlowLayout()
@@ -116,7 +118,6 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             setOnTagClickListener(this@MainActivity)
             setOnSelectListener(this@MainActivity)
         }
-
     }
 
     override fun onStart() {
@@ -470,13 +471,19 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             22 -> {
                 //  https://blog.csdn.net/zhyooo123/article/details/6698567
             }
+
             23 -> {
                 startActivity(Intent(this, TabLayoutActivity::class.java))
             }
+
+            24 -> {
+                finish()
+                startActivity(Intent(this, TransparentActivity::class.java))
+            }
+
         }
         return true
     }
-
 
 
 }

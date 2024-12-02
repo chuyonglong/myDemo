@@ -45,7 +45,7 @@ fun ComponentActivity.hideSystemBars(type: Int) {
 }
 
 
-fun AppCompatActivity.onLockBackPressed(isEnabled: Boolean, callback: () -> Unit) {
+fun AppCompatActivity.onDemoBackPressed(isEnabled: Boolean, callback: () -> Unit) {
     onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(isEnabled) {
         override fun handleOnBackPressed() {
             callback()

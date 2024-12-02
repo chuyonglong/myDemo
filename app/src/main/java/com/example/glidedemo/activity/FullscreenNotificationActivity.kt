@@ -1,16 +1,20 @@
 package com.example.glidedemo.activity
 
+import android.Manifest
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.glidedemo.R
 import com.example.glidedemo.databinding.ActivityFullNotificationBinding
@@ -24,6 +28,14 @@ class FullscreenNotificationActivity : AppCompatActivity() {
         ActivityFullNotificationBinding.inflate(layoutInflater)
     }
 
+    /**
+     * 通知栏权限
+     */
+    private val postNotificationLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { _ ->
+
+        }
+
     private val CHANNEL_ID = "Lock_Service_CHANNEL_ID"
     private val NOTIFICATION_TITLE = "20241128"
 
@@ -35,11 +47,19 @@ class FullscreenNotificationActivity : AppCompatActivity() {
 
     private fun initActions() {
         binding.fullNotificationTitle.setOnClickListener {
-            lifecycleScope.launch {
-                delay(2000) // 模拟延迟
-                createNotificationChannelIfNeeded(CHANNEL_ID, NOTIFICATION_TITLE)
-                sendFullscreenNotification()
+            val permissionGranted = ContextCompat.checkSelfPermission(
+                this, Manifest.permission.POST_NOTIFICATIONS
+            ) == PackageManager.PERMISSION_GRANTED
+            if (!permissionGranted) {
+                postNotificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            } else {
+                lifecycleScope.launch {
+                    delay(1000) // 模拟延迟
+                    createNotificationChannelIfNeeded(CHANNEL_ID, NOTIFICATION_TITLE)
+                    sendFullscreenNotification()
+                }
             }
+
         }
     }
 

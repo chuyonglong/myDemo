@@ -28,6 +28,7 @@ class EdgeLightView : View {
     private lateinit var sweepGradient: SweepGradient
     private val gradientMatrix = Matrix()
     private var mRotate = 0f
+
     //设置速度
     private var rotateOffset = 15f
     private var topRound = dp2px(40f)
@@ -127,7 +128,8 @@ class EdgeLightView : View {
                 } else {
                     canvas.clipPath(path, Region.Op.DIFFERENCE)
                 }
-                canvas.drawColor(Color.BLACK)
+                //背景颜色
+                canvas.drawColor(Color.TRANSPARENT)
                 path.reset()
 
                 path.moveTo(lineSpaceSize, totalHeight - bottomRound)
