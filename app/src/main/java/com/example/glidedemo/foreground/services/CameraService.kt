@@ -1,6 +1,7 @@
 package com.example.glidedemo.foreground.services
 
 import android.app.Notification
+import android.app.NotificationManager
 import android.content.Intent
 import android.os.CountDownTimer
 import android.os.IBinder

@@ -8,7 +8,7 @@
 
 
     <TextView
-        android:id="@+id/full_notification_title"
+        android:id="@+id/full_notification_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -17,13 +17,49 @@
         android:backgroundTint="#03A9F4"
         android:gravity="center_horizontal"
         android:padding="16dp"
-        android:text="Full Notification"
+        android:text="activity显示全屏通知"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/full_notification_permission"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/full_notification_permission"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="40dp"
+        android:background="@drawable/bg_15_radius"
+        android:backgroundTint="#03A9F4"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:text="请求上层权限"
+        android:textColor="#FFFFFF"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toTopOf="@+id/full_notification_service"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/full_notification_activity" />
+
+    <TextView
+        android:id="@+id/full_notification_service"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginHorizontal="40dp"
+        android:background="@drawable/bg_15_radius"
+        android:backgroundTint="#03A9F4"
+        android:gravity="center_horizontal"
+        android:padding="16dp"
+        android:text="服务显示全屏通知"
         android:textColor="#FFFFFF"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/full_notification_permission" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

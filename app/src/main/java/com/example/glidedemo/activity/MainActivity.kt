@@ -32,6 +32,7 @@ import com.example.glidedemo.extensions.PERMISSION_STRING_TYPE
 import com.example.glidedemo.foreground.services.CameraService
 import com.example.glidedemo.foreground.services.ConnectedDeviceService
 import com.example.glidedemo.foreground.services.HealthService
+import com.example.glidedemo.foreground.services.SpecialUseService
 import com.example.glidedemo.permission.GalleryPermissionUtils
 import com.example.glidedemo.utils.MediaQueryForPermission
 import com.example.glidedemo.views.flowlayout.FlowLayout
@@ -107,7 +108,6 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
         super.onCreate(savedInstanceState)
         // 显示壁纸
         window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER)
-
         MMKV.initialize(this)
         setContentView(binding.root)
         initFlowLayout()
@@ -223,6 +223,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
 //        startService(serviceIntent)
         ContextCompat.startForegroundService(this, serviceIntent)
     }
+
 
     private fun startConnectedDeviceService() {
         val serviceIntent = Intent(this, ConnectedDeviceService::class.java)
@@ -463,6 +464,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             }
 
             21 -> {
+                // TODO: 全屏通知
                 startActivity(Intent(this, FullscreenNotificationActivity::class.java))
 
 

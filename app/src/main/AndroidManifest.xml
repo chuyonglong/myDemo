@@ -115,6 +115,11 @@
             android:foregroundServiceType="camera" />
 
         <service
+            android:name="com.example.glidedemo.foreground.services.SpecialUseService"
+            android:exported="false"
+            android:foregroundServiceType="specialUse" />
+
+        <service
             android:name="com.example.glidedemo.foreground.services.ConnectedDeviceService"
             android:exported="false"
             android:foregroundServiceType="connectedDevice" />
@@ -229,7 +234,9 @@
             android:name="com.example.glidedemo.activity.TransparentActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
+            android:taskAffinity="kjv.bible.kingjamesbible.notify"
             android:theme="@style/Theme.OverlayApply" />
 
 
