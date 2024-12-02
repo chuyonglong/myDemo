@@ -75,7 +75,8 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "字体大小测试",
             "Flow 布局",
             "全屏通知",
-            "使用桌面背景"
+            "使用桌面背景",
+            "使tabLayout优化"
         )
     }
 
@@ -268,6 +269,70 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
         Log.d("223366", "onSelected:---${selectPosSet} ")
     }
 
+    private fun goUsagePermissionSetting() {
+        val intent = Intent(
+            this@MainActivity, PermissionSettingActivity::class.java
+        ).apply {
+            putExtra(PERMISSION_STRING_TYPE, Settings.ACTION_USAGE_ACCESS_SETTINGS)
+        }
+        permissionUsageAccessActivityResultLauncher.launch(intent)
+    }
+
+    private val permissionUsageAccessActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+
+        }
+
+
+    private val moveVaultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                Toast.makeText(this, "请求权限成功", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+    /**
+     * 获取 数据跳转PhotoDetailActivity
+     */
+
+    private fun goPhotoDetailActivity() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val list: MutableList<MediaBase> =
+                MediaQueryForPermission.queryAllData(this@MainActivity)
+
+            if (list.isEmpty()) {
+                withContext(Dispatchers.Main) {
+                    Toast.makeText(
+                        this@MainActivity, "没有数据,别点了!!!", Toast.LENGTH_SHORT
+                    ).show()
+                }
+                return@launch
+            }
+
+            val finalLt: ArrayList<MediaBase> = if (list.size < 10) {
+                ArrayList(list)
+            } else {
+                ArrayList(list.subList(0, 10))
+            }
+            Intent(this@MainActivity, PhotoDetailActivity::class.java).apply {
+                putExtra("detail_list_data", finalLt)
+                startActivity(this)
+            }
+        }
+    }
+
+    /**
+     * 媒体权限回调
+     */
+    private val mediaPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            if (it.isNotEmpty()) {
+                goPhotoDetailActivity()
+            }
+        }
+
+
     override fun onTagClick(view: View?, position: Int, parent: FlowLayout?): Boolean {
         Log.d("223366", "onTagClick:---onTagClick ----:${position}")
 
@@ -399,77 +464,19 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             21 -> {
                 startActivity(Intent(this, FullscreenNotificationActivity::class.java))
 
+
             }
 
-            22-> {
-                  //  https://blog.csdn.net/zhyooo123/article/details/6698567
+            22 -> {
+                //  https://blog.csdn.net/zhyooo123/article/details/6698567
+            }
+            23 -> {
+                startActivity(Intent(this, TabLayoutActivity::class.java))
             }
         }
         return true
     }
 
 
-    private fun goUsagePermissionSetting() {
-        val intent = Intent(
-            this@MainActivity, PermissionSettingActivity::class.java
-        ).apply {
-            putExtra(PERMISSION_STRING_TYPE, Settings.ACTION_USAGE_ACCESS_SETTINGS)
-        }
-        permissionUsageAccessActivityResultLauncher.launch(intent)
-    }
-
-    private val permissionUsageAccessActivityResultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-
-
-        }
-
-
-    private val moveVaultLauncher =
-        registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
-            if (result.resultCode == Activity.RESULT_OK) {
-                Toast.makeText(this, "请求权限成功", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-    /**
-     * 获取 数据跳转PhotoDetailActivity
-     */
-
-    private fun goPhotoDetailActivity() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val list: MutableList<MediaBase> =
-                MediaQueryForPermission.queryAllData(this@MainActivity)
-
-            if (list.isEmpty()) {
-                withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@MainActivity, "没有数据,别点了!!!", Toast.LENGTH_SHORT
-                    ).show()
-                }
-                return@launch
-            }
-
-            val finalLt: ArrayList<MediaBase> = if (list.size < 10) {
-                ArrayList(list)
-            } else {
-                ArrayList(list.subList(0, 10))
-            }
-            Intent(this@MainActivity, PhotoDetailActivity::class.java).apply {
-                putExtra("detail_list_data", finalLt)
-                startActivity(this)
-            }
-        }
-    }
-
-    /**
-     * 媒体权限回调
-     */
-    private val mediaPermissionLauncher =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
-            if (it.isNotEmpty()) {
-                goPhotoDetailActivity()
-            }
-        }
 
 }
