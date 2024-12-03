@@ -30,10 +30,9 @@ class HealthService : BaseService(), SensorEventListener {
     private var stepsensortype_gyroscope: Sensor? = null
     private var stepCount: Int = 0
 
-    override fun onCreate() {
-        super.onCreate()
+    override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        super.onStartCommand(intent, flags, startId)
         Log.d("HealthService", "Service Created")
-
         createNotificationChannel()
 
         val notification = NotificationCompat.Builder(this, "health_service_channel")
@@ -42,7 +41,7 @@ class HealthService : BaseService(), SensorEventListener {
             .setSmallIcon(R.drawable.ic_camera)
             .build()
 
-        startForeground(1, notification)
+        startForeground(223345, notification)
 
         sensorManager = getSystemService(SENSOR_SERVICE) as SensorManager
         stepSensor = sensorManager?.getDefaultSensor(Sensor.TYPE_STEP_COUNTER)
@@ -58,6 +57,7 @@ class HealthService : BaseService(), SensorEventListener {
 //        sensorList?.forEach { sensor ->
 //            Log.d("HealthService", "传感器类型: ${sensor.type}")
 //        }
+        return START_STICKY
     }
 
     override fun onDestroy() {
@@ -71,7 +71,7 @@ class HealthService : BaseService(), SensorEventListener {
             Log.d("HealthService", "传感器数据: ${event.values.joinToString()}")
             stepCount = event.values[0].toInt()
             Log.d("HealthService", "步数更新: $stepCount")
-            MMKV.defaultMMKV().encode("step_count",stepCount)
+            MMKV.defaultMMKV().encode("step_count", stepCount)
 
             updateNotification(stepCount)
         }

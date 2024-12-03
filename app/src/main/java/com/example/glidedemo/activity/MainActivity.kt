@@ -29,6 +29,7 @@ import com.example.glidedemo.bean.Medium
 import com.example.glidedemo.databinding.ActivityMainBinding
 import com.example.glidedemo.databinding.FlowlayoutTextBinding
 import com.example.glidedemo.extensions.PERMISSION_STRING_TYPE
+import com.example.glidedemo.extensions.toast
 import com.example.glidedemo.foreground.services.CameraService
 import com.example.glidedemo.foreground.services.ConnectedDeviceService
 import com.example.glidedemo.foreground.services.HealthService
@@ -54,32 +55,32 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
     }
 
     private val mVals by lazy {
-        arrayOf(
-            "相机",
-            "液晶时钟",
-            "健康",
-            "连接",
-            "外部activity",
-            "媒体",
-            "点赞",
-            "room数据库",
-            "list adapter",
-            "media list adapter",
-            "setresult",
-            "临时权限",
-            "全屏显示图片(未完成)",
-            "密码锁",
-            "后台拍照无预览相机",
-            "权限引导",
-            "吸顶",
-            "新手引导",
-            "ShapeableImageView",
-            "字体大小测试",
-            "Flow 布局",
-            "全屏通知",
-            "使用桌面背景",
-            "使tabLayout优化",
-            "透明activity"
+        linkedMapOf(
+            "0" to "相机",
+            "1" to "液晶时钟",
+            "2" to "健康",
+            "3" to "连接",
+            "4" to "跳转外部activity",
+            "5" to "媒体",
+            "6" to "点赞",
+            "7" to "room数据库",
+            "8" to "list adapter ",
+            "9" to "media list adapter",
+            "10" to "setresult",
+            "11" to "临时权限",
+            "12" to "全屏显示图片(未完成)",
+            "13" to "密码锁",
+            "14" to "后台拍照无预览相机",
+            "15" to "权限引导",
+            "16" to "吸顶",
+            "17" to "新手引导",
+            "18" to "ShapeableImageView",
+            "19" to "字体大小测试",
+            "20" to "Flow 布局 ",
+            "21" to "全屏通知",
+            "22" to "使用桌面背景",
+            "23" to "使tabLayout优化",
+            "24" to "透明activity"
         )
     }
 
@@ -100,7 +101,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
                 startHealthService()
             } else {
                 // 权限被拒绝
-                Toast.makeText(this, "权限被拒绝", Toast.LENGTH_SHORT).show()
+                toast("权限被拒绝")
             }
         }
 
@@ -118,22 +119,20 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             setOnTagClickListener(this@MainActivity)
             setOnSelectListener(this@MainActivity)
         }
+        isHasNotificationPermission()
     }
 
-    override fun onStart() {
-        super.onStart()
-        Log.d(
-            "223366", "onStart: ----onStart---onStart---onStart"
-        )
-    }
+    private fun isHasNotificationPermission() {
+        val permissionGranted = ContextCompat.checkSelfPermission(
+            this, Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
 
-    override fun onResume() {
-        super.onResume()
-        Log.d(
-            "223366", "onResume: ----onResume---onResume---onResume"
-        )
+        binding.isHasNotificationPermission.text = if (permissionGranted) {
+            "有通知权限"
+        } else {
+            "无通知权限"
+        }
     }
-
 
     private fun checkPermissions() {
         val fineLocationPermission =
@@ -175,15 +174,15 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
         ActivityResultContracts.RequestPermission()
     ) { isGranted ->
         if (isGranted) {
-//            openCamera()
+            openCamera()
 //            startCameraService()
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-                checkForNotificationPermission()
-            }
+//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+//                checkForNotificationPermission()
+//            }
         } else {
             // 权限被拒绝，显示提示信息
-            Toast.makeText(this, "相机权限被拒绝", Toast.LENGTH_SHORT).show()
+            toast("相机权限被拒绝")
         }
     }
 
@@ -198,14 +197,14 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
                 startConnectedDeviceService()
             } else {
                 // 权限被拒绝，显示提示信息
-                Toast.makeText(this, "连接权限被拒绝", Toast.LENGTH_SHORT).show()
+                toast("连接权限被拒绝")
             }
         }
 
 
     private fun initFlowLayout() {
         binding.tagFlowLayout.apply {
-            addAdapter(object : TagAdapter<Any>(mVals.toList()) {
+            addAdapter(object : TagAdapter<Any>(mVals.values.toList()) {
                 override fun getView(parent: FlowLayout?, position: Int, s: Any): View {
                     val tvBinding =
                         FlowlayoutTextBinding.inflate(layoutInflater, binding.tagFlowLayout, false)
@@ -290,7 +289,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
     private val moveVaultLauncher =
         registerForActivityResult(ActivityResultContracts.StartIntentSenderForResult()) { result ->
             if (result.resultCode == Activity.RESULT_OK) {
-                Toast.makeText(this, "请求权限成功", Toast.LENGTH_SHORT).show()
+                toast("请求权限成功")
             }
         }
 
@@ -305,9 +304,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
 
             if (list.isEmpty()) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(
-                        this@MainActivity, "没有数据,别点了!!!", Toast.LENGTH_SHORT
-                    ).show()
+                    toast("没有数据,别点了!!!")
                 }
                 return@launch
             }
@@ -338,7 +335,6 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
     override fun onTagClick(view: View?, position: Int, parent: FlowLayout?): Boolean {
         Log.d("223366", "onTagClick:---onTagClick ----:${position}")
 
-
         when (position) {
             0 -> {
                 val eventParameters = "{\"name\":\"相机\", \"age\":\"18\"}"
@@ -366,7 +362,8 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
 
             4 -> {
                 //自定义权限启动外部activity
-                startActivity(Intent("'study.intent.action.main"))
+                toast("测试用,没有外部activity")
+//                startActivity(Intent("'study.intent.action.main"))
             }
 
             5 -> {
@@ -390,6 +387,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             }
 
             10 -> {
+                //setresult
                 startActivityForResult(Intent(this, LedClockActivity::class.java), 1001)
             }
 
@@ -420,9 +418,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             12 -> {
                 val permissionEnum = GalleryPermissionUtils.checkMediaPermissionResult(this)
                 if (permissionEnum == GalleryPermissionUtils.PermissionEnum.NO_PERMISSIONS) {
-                    Toast.makeText(
-                        this@MainActivity, "没有权限----,请求权限!!!", Toast.LENGTH_SHORT
-                    ).show()
+                    toast("没有权限----,请求权限!!!")
                     GalleryPermissionUtils.requestMediaPermissions(mediaPermissionLauncher)
                 } else {
                     goPhotoDetailActivity()
@@ -439,6 +435,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             }
 
             15 -> {
+                //权限引导
                 goUsagePermissionSetting()
             }
 

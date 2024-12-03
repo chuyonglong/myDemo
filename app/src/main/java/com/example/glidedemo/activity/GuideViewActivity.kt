@@ -2,8 +2,8 @@ package com.example.glidedemo.activity
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.binioter.guideview.GuideBuilder
 import com.example.glidedemo.databinding.ActivityGuideViewBinding
+import com.example.glidedemo.extensions.showGuideView
 import com.example.glidedemo.views.SimpleComponent
 
 
@@ -16,31 +16,14 @@ class GuideViewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        showGuide()
+        initView()
     }
 
-
-   private fun showGuide(){
-       binding.imageGuide.post {
-           val build = GuideBuilder()
-           build.setTargetView(binding.imageGuide)
-               .setAlpha(50)
-               .setHighTargetCorner(20)
-               .setHighTargetPadding(10)
-               .addComponent(SimpleComponent())
-           build.setOnVisibilityChangedListener(object : GuideBuilder.OnVisibilityChangedListener {
-               override fun onShown() {
-
-               }
-
-               override fun onDismiss() {
-                   // TODO: 展示第二个
-               }
-
-           })
-           build.createGuide().show(this)
-       }
+    private fun initView() {
+        binding.imageGuide.post {
+            binding.imageGuide.showGuideView(this, 0, SimpleComponent()) {
+                binding.textGuide.showGuideView(this, 0, SimpleComponent()) {}
+            }
+        }
     }
-
-
 }
