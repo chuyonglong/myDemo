@@ -37,6 +37,8 @@ import com.example.glidedemo.foreground.services.HealthService
 import com.example.glidedemo.foreground.services.SpecialUseService
 import com.example.glidedemo.permission.GalleryPermissionUtils
 import com.example.glidedemo.utils.MediaQueryForPermission
+import com.example.glidedemo.utils.beGone
+import com.example.glidedemo.utils.beVisible
 import com.example.glidedemo.views.flowlayout.FlowLayout
 import com.example.glidedemo.views.flowlayout.TagAdapter
 import com.example.glidedemo.views.flowlayout.TagFlowLayout
@@ -120,20 +122,41 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             setOnTagClickListener(this@MainActivity)
             setOnSelectListener(this@MainActivity)
         }
-        isHasNotificationPermission()
+
     }
 
-    private fun isHasNotificationPermission() {
+    override fun onResume() {
+        super.onResume()
+        initView()
+    }
+
+    private fun initView() {
         val permissionGranted = ContextCompat.checkSelfPermission(
             this, Manifest.permission.POST_NOTIFICATIONS
         ) == PackageManager.PERMISSION_GRANTED
-
-        binding.isHasNotificationPermission.text = if (permissionGranted) {
-            "有通知权限"
+        val notificationStr = if (permissionGranted) {
+            "有通知权限\n"
         } else {
-            "无通知权限"
+            "无通知权限\n"
         }
+
+        val permissionEnum = GalleryPermissionUtils.checkMediaPermissionResult(this)
+        val galleryStr = when (permissionEnum) {
+            GalleryPermissionUtils.PermissionEnum.NO_PERMISSIONS -> {
+                "无媒体权限"
+            }
+
+            GalleryPermissionUtils.PermissionEnum.PARTIAL_PERMISSIONS -> {
+                "部分媒体权限"
+            }
+
+            else -> {
+                "全部媒体权限"
+            }
+        }
+        binding.isHasNotificationPermission.text = notificationStr + galleryStr
     }
+
 
     private fun checkPermissions() {
         val fineLocationPermission =
@@ -393,6 +416,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             }
 
             11 -> {
+                toast("如点击没反应,检查媒体权限,申请权限点击 '媒体' 按钮")
                 // :    这里的问题是之前 MediaStore.Images.Media.EXTERNAL_CONTENT_URI 选错了
 //                val path = "/storage/emulated/0/svg/Cat.svg"
                 lifecycleScope.launch(Dispatchers.IO) {
@@ -441,6 +465,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             }
 
             16 -> {
+                //协调布局--吸顶
                 startActivity(Intent(this, CeilingActivity::class.java))
             }
 

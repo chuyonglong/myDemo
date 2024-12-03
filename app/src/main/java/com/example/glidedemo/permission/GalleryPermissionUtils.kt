@@ -69,7 +69,24 @@ object GalleryPermissionUtils {
      */
     enum class PermissionEnum {
         FULL_PERMISSIONS, PARTIAL_PERMISSIONS, NO_PERMISSIONS
+    }
 
+
+    /**
+     * 相机权限
+     */
+    fun requestCameraPermissions(permissionCameraLauncher: ActivityResultLauncher<String>) {
+        permissionCameraLauncher.launch(Manifest.permission.CAMERA)
+    }
+
+    /**
+     * 是否有相机权限
+     */
+    fun hasCameraPermissions(activity: FragmentActivity): Boolean {
+        return ContextCompat.checkSelfPermission(
+            activity,
+            Manifest.permission.CAMERA
+        ) == PackageManager.PERMISSION_GRANTED
     }
 
 
