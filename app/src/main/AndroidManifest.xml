@@ -239,6 +239,9 @@
             android:taskAffinity="kjv.bible.kingjamesbible.notify"
             android:theme="@style/Theme.OverlayApply" />
 
+        <activity
+            android:name="com.example.glidedemo.activity.ThemeActivity"
+            android:theme="@style/AppTheme" />
 
     </application>
 

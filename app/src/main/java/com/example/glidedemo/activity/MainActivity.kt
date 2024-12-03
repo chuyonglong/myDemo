@@ -18,6 +18,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
@@ -59,7 +60,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "0" to "相机",
             "1" to "液晶时钟",
             "2" to "健康",
-            "3" to "连接",
+            "3" to "主题切换",
             "4" to "跳转外部activity",
             "5" to "媒体",
             "6" to "点赞",
@@ -357,7 +358,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             }
 
             3 -> {
-                startConnectedDeviceService()
+                startActivity(Intent(this, ThemeActivity::class.java))
             }
 
             4 -> {
