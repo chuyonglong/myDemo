@@ -2,7 +2,6 @@ package com.example.glidedemo.activity
 
 import android.Manifest
 import android.app.Activity
-import android.app.PendingIntent
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -13,20 +12,15 @@ import android.provider.Settings
 import android.util.Log
 import android.view.View
 import android.view.WindowManager
-import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.NotificationCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.example.glidedemo.R
 import com.example.glidedemo.base.BaseActivity
 import com.example.glidedemo.bean.MediaBase
 import com.example.glidedemo.bean.MediaData
-import com.example.glidedemo.bean.Medium
 import com.example.glidedemo.databinding.ActivityMainBinding
 import com.example.glidedemo.databinding.FlowlayoutTextBinding
 import com.example.glidedemo.extensions.PERMISSION_STRING_TYPE
@@ -34,18 +28,14 @@ import com.example.glidedemo.extensions.toast
 import com.example.glidedemo.foreground.services.CameraService
 import com.example.glidedemo.foreground.services.ConnectedDeviceService
 import com.example.glidedemo.foreground.services.HealthService
-import com.example.glidedemo.foreground.services.SpecialUseService
 import com.example.glidedemo.permission.GalleryPermissionUtils
 import com.example.glidedemo.utils.MediaQueryForPermission
-import com.example.glidedemo.utils.beGone
-import com.example.glidedemo.utils.beVisible
 import com.example.glidedemo.views.flowlayout.FlowLayout
 import com.example.glidedemo.views.flowlayout.TagAdapter
 import com.example.glidedemo.views.flowlayout.TagFlowLayout
 import com.tencent.mmkv.MMKV
 import io.appmetrica.analytics.AppMetrica
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.util.ArrayList
@@ -83,7 +73,10 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "21" to "全屏通知",
             "22" to "使用桌面背景",
             "23" to "使tabLayout优化",
-            "24" to "透明activity"
+            "24" to "透明activity",
+            "25" to "图像分类Interpreter",
+            "26" to "图像分类",
+
         )
     }
 
@@ -504,6 +497,12 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             24 -> {
                 finish()
                 startActivity(Intent(this, TransparentActivity::class.java))
+            }
+            25 -> {
+                startActivity(Intent(this, ImageClassificationInterpreterActivity::class.java))
+            }
+            26 -> {
+                startActivity(Intent(this, ImageClassificationActivity::class.java))
             }
 
         }

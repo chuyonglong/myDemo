@@ -3,14 +3,20 @@ package com.example.glidedemo.activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.glidedemo.adapter.MediaAdapter
 import com.example.glidedemo.base.BaseActivity
+import com.example.glidedemo.bean.MediaData
 import com.example.glidedemo.databinding.ActivityMediaBinding
+import com.example.glidedemo.entity.AppData
+import com.example.glidedemo.extensions.toast
 import com.example.glidedemo.permission.GalleryPermissionUtils
+import com.example.glidedemo.utils.ImageClassifierHelper
 import com.example.glidedemo.utils.MediaQueryForPermission
 import com.example.glidedemo.utils.beGone
 import com.example.glidedemo.utils.beVisible
@@ -18,8 +24,10 @@ import com.example.glidedemo.views.GalleryGridLayoutManager
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import org.tensorflow.lite.task.vision.classifier.Classifications
 
-class MediaActivity : BaseActivity() {
+class MediaActivity : BaseActivity(), ImageClassifierHelper.ClassifierListener,
+    MediaAdapter.OnMediaItemClickListener {
 
     private val binding by lazy {
         ActivityMediaBinding.inflate(layoutInflater)
@@ -124,6 +132,7 @@ class MediaActivity : BaseActivity() {
                 }
             }
         }
+        mediaAdapter.setMediaItemClickListener(this)
     }
 
 
@@ -140,6 +149,57 @@ class MediaActivity : BaseActivity() {
         mIntent.action = "android.settings.APPLICATION_DETAILS_SETTINGS"
         mIntent.data = Uri.fromParts("package", this.packageName, null)
         this.startActivity(mIntent)
+    }
+
+
+    private val imageClassifierHelper: ImageClassifierHelper by lazy {
+        ImageClassifierHelper(
+            threshold = 0.5f,
+            numThreads = 2,
+            maxResults = 3,
+            currentDelegate = 0,
+            currentModel = 5,
+            context = this,
+            imageClassifierListener = this
+        )
+    }
+
+
+    override fun onError(error: String) {
+        Log.d("223366", "onError: error")
+    }
+
+    override fun onResults(results: List<Classifications>?, inferenceTime: Long) {
+        lifecycleScope.launch(Dispatchers.Main) {
+            if (results == null) {
+                toast("识别失败！", Toast.LENGTH_LONG)
+            } else {
+                var str = "识别结果：\n"
+                for ((index, result) in results.withIndex()) {
+                    str += if (result.categories.isEmpty()) {
+                        "${index + 1}. 没有识别到任何内容\n"
+                    } else {
+                        "${index + 1}. ${result.categories[0].label} 准确率${result.categories.first().score * 100}\n"
+                    }
+                }
+                toast(str, Toast.LENGTH_LONG)
+            }
+        }
+
+    }
+
+    override fun mediaClick(item: MediaData) {
+        // 加载 Bitmap 图像
+        lifecycleScope.launch(Dispatchers.IO) {
+            val bitmap = imageClassifierHelper.getSampleBitmap(item.path) ?: run {
+                withContext(Dispatchers.Main) {
+                    toast("图像加载失败！")
+                }
+                return@launch
+            }
+            // 执行图像分类
+            imageClassifierHelper.classify(bitmap)
+        }
     }
 
 }

@@ -14,6 +14,7 @@ import com.example.glidedemo.bean.MediaTitle
 
 import com.example.glidedemo.databinding.ItemMediaBinding
 import com.example.glidedemo.databinding.ItemTitleBinding
+import com.example.glidedemo.entity.AppData
 
 class MediaAdapter : BaseAdapter() {
     //标题
@@ -88,10 +89,22 @@ class MediaAdapter : BaseAdapter() {
 
     }
 
-    inner class MediaViewHolder(private val binding: ItemMediaBinding) :
+    inner class MediaViewHolder(val binding: ItemMediaBinding) :
         RecyclerView.ViewHolder(binding.root) {
+        var mediaItem: MediaData? = null
+
+        init {
+            binding.root.setOnClickListener {
+                mediaItem?.let {
+                    mediaItemClickListener?.mediaClick(it)
+                }
+            }
+        }
+
         fun bindView(medium: MediaData) {
+            mediaItem = medium
             Glide.with(binding.root.context).load(medium.path).into(binding.myImage)
+
         }
     }
 
@@ -105,5 +118,16 @@ class MediaAdapter : BaseAdapter() {
     fun isASectionTitle(position: Int): Boolean {
         val item = mediaList.getOrNull(position) ?: return false
         return item is MediaTitle
+    }
+
+    private var mediaItemClickListener: OnMediaItemClickListener? = null
+
+    fun setMediaItemClickListener(listener: OnMediaItemClickListener) {
+        mediaItemClickListener = listener
+    }
+
+    interface OnMediaItemClickListener {
+        fun mediaClick(item: MediaData)
+
     }
 }

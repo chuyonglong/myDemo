@@ -242,6 +242,12 @@
         <activity
             android:name="com.example.glidedemo.activity.ThemeActivity"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.glidedemo.activity.ImageClassificationInterpreterActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.glidedemo.activity.ImageClassificationActivity"
+            android:theme="@style/AppTheme" />
 
     </application>
 

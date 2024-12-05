@@ -7,7 +7,6 @@ import android.content.Intent
 import android.os.IBinder
 import android.util.Log
 import androidx.core.app.NotificationCompat
-import androidx.core.app.NotificationManagerCompat
 import com.example.glidedemo.R
 import com.example.glidedemo.activity.TransparentActivity
 import com.example.glidedemo.base.BaseService
@@ -48,13 +47,10 @@ class SpecialUseService : BaseService() {
         val builder = NotificationCompat.Builder(this, CHANNEL_ID_NOTIFICATION)
             .setSmallIcon(R.drawable.cat)
             .setContentTitle("服务全屏通知")
-            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_DEFAULT)//立即出通知
+            .setForegroundServiceBehavior(NotificationCompat.FOREGROUND_SERVICE_IMMEDIATE)//立即出通知
             .setContentText("这是一条服务全屏通知的内容。")
-            .setPriority(NotificationCompat.PRIORITY_MAX) // 设置高优先级
+            .setPriority(NotificationCompat.PRIORITY_HIGH) // 设置高优先级
             .setFullScreenIntent(fullscreenPendingIntent, true) // 设置全屏意图
-
-        val notificationManager = NotificationManagerCompat.from(this)
-        notificationManager.notify(22336633, builder.build()) // 使用ID 0发送通知
         startForeground(22336633, builder.build())
     }
 
@@ -68,5 +64,7 @@ class SpecialUseService : BaseService() {
                 intent,
                 PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
             )
+
         }
+
 }
