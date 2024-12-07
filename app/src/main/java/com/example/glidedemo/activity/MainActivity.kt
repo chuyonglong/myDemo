@@ -76,8 +76,12 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "24" to "透明activity",
             "25" to "图像分类Interpreter",
             "26" to "图像分类",
+            "27" to "水波纹",
+            "28" to "主题，进入退出动画",
+            "29" to "FaceDetector",
+            "30" to "今日头条宽度适配",
 
-        )
+            )
     }
 
 
@@ -482,8 +486,6 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             21 -> {
                 // TODO: 全屏通知
                 startActivity(Intent(this, FullscreenNotificationActivity::class.java))
-
-
             }
 
             22 -> {
@@ -498,11 +500,25 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
                 finish()
                 startActivity(Intent(this, TransparentActivity::class.java))
             }
+
             25 -> {
                 startActivity(Intent(this, ImageClassificationInterpreterActivity::class.java))
             }
+
             26 -> {
                 startActivity(Intent(this, ImageClassificationActivity::class.java))
+            }
+
+            27 -> {
+                // TODO: 水波纹 WaveView
+            }
+
+            28 -> {
+                // TODO: 主题，进入退出动画
+            }
+
+            29 -> {
+                // TODO: FaceDetector
             }
 
         }

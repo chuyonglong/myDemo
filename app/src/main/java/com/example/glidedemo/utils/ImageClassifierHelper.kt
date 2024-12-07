@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.os.SystemClock
 import android.util.Log
-import com.example.glidedemo.bean.Medium
 import org.tensorflow.lite.support.image.ImageProcessor
 import org.tensorflow.lite.support.image.TensorImage
 import org.tensorflow.lite.task.core.BaseOptions
@@ -65,6 +64,8 @@ class ImageClassifierHelper(
                 MODEL_EFFICIENTNETV2 -> "efficientnet-lite2.tflite"
                 MODEL_EFFICIENTNETV3 -> "1.tflite"
                 MODEL_EFFICIENTNETV4 -> "mobilenetv1.tflite"
+                6 -> "bird_classifier.tflite"
+                7 -> "object_labeler.tflite"
                 else -> "mobilenetv1.tflite"
             }
 
