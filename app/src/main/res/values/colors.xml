@@ -16,4 +16,10 @@
 
     <color name="greyish">#aaa8a8</color>
     <color name="mine_shaft">#303030</color>
+
+    <color name="md_theme_primary">#6200EE</color> <!-- 默认主颜色 -->
+    <color name="md_theme_primary_dark">#3700B3</color> <!-- 暗模式下的主颜色 -->
+    <color name="md_theme_primary_light">#BB86FC</color> <!-- 明亮模式下的主颜色 -->
+    <color name="notification_text_color">#000000</color>
+
 </resources>

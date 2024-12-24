@@ -9,6 +9,7 @@ class App : Application() {
 
     companion object {
         private var _instance: App? = null
+        fun getInstance() = _instance!!
         fun getContext() = _instance!!.applicationContext!!
     }
 

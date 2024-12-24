@@ -2,4 +2,25 @@
     <string name="app_name">test</string>
     <string name="zmkm">快捷方式</string>
     <string name="one">one</string>
+
+    <string name="free_up_space">
+        <![CDATA[
+        Free up <font color="#ff0000">%s</font>  space!
+        ]]>
+        </string>
+
+    <string name="clean">Clean</string>
+    <string name="close">Close</string>
+
+    <string name="notifications_title_1">Free up %s of space</string>
+    <string name="notifications_title_2">Similar photos detected!</string>
+    <string name="notifications_title_3">%s similar images detected!</string>
+    <string name="notifications_title_4">Too many screenshots piling up!</string>
+    <string name="notifications_title_5">Screenshots are taking up too much space!</string>
+
+    <string name="notifications_content_1">Similar photos detected! Click to free up space!✨</string>
+    <string name="notifications_content_2">Remove unnecessary similar photos and make more room!</string>
+    <string name="notifications_content_3">Did you know? These similar photos are wasting your space!</string>
+    <string name="notifications_content_4">Delete unused screenshots to free up storage.📱✨</string>
+    <string name="notifications_content_5">Old screenshots detected. Clean up for more storage!</string>
 </resources>

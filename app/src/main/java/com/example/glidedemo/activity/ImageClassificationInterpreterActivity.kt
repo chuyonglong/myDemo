@@ -194,4 +194,6 @@ class ImageClassificationInterpreterActivity : AppCompatActivity() {
         TFLiteHelper.closeInterpreter()
     }
 
+
+
 }

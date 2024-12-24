@@ -11,16 +11,17 @@ import android.provider.MediaStore
 import android.provider.Settings
 import android.util.Log
 import android.view.View
-import android.view.WindowManager
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
 import com.example.glidedemo.base.BaseActivity
 import com.example.glidedemo.bean.MediaBase
 import com.example.glidedemo.bean.MediaData
+import com.example.glidedemo.bean.Medium
 import com.example.glidedemo.databinding.ActivityMainBinding
 import com.example.glidedemo.databinding.FlowlayoutTextBinding
 import com.example.glidedemo.extensions.PERMISSION_STRING_TYPE
@@ -38,7 +39,6 @@ import io.appmetrica.analytics.AppMetrica
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.util.ArrayList
 
 
 class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
@@ -78,7 +78,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "26" to "图像分类",
             "27" to "水波纹",
             "28" to "主题，进入退出动画",
-            "29" to "FaceDetector",
+            "29" to "mlkit图像标签",
             "30" to "今日头条宽度适配",
 
             )
@@ -105,16 +105,19 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             }
         }
 
+    var aa: Medium? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
         // 显示壁纸
-        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER)
+//        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER)
         MMKV.initialize(this)
         setContentView(binding.root)
         initFlowLayout()
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//            checkForNotificationPermission()
-//        }
+        //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+        //            checkForNotificationPermission()
+        //        }
         binding.tagFlowLayout.apply {
             setOnTagClickListener(this@MainActivity)
             setOnSelectListener(this@MainActivity)
@@ -196,11 +199,11 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
     ) { isGranted ->
         if (isGranted) {
             openCamera()
-//            startCameraService()
+            //            startCameraService()
 
-//            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-//                checkForNotificationPermission()
-//            }
+            //            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            //                checkForNotificationPermission()
+            //            }
         } else {
             // 权限被拒绝，显示提示信息
             toast("相机权限被拒绝")
@@ -240,7 +243,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
 
     private fun startCameraService() {
         val serviceIntent = Intent(this, CameraService::class.java)
-//        startService(serviceIntent)
+        //        startService(serviceIntent)
         ContextCompat.startForegroundService(this, serviceIntent)
     }
 
@@ -283,7 +286,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
     private val mPermReceiver =
         registerForActivityResult(ActivityResultContracts.RequestPermission()) { result ->
             val serviceIntent = Intent(this, CameraService::class.java)
-//        startService(serviceIntent)
+            //        startService(serviceIntent)
             ContextCompat.startForegroundService(this, serviceIntent)
         }
 
@@ -360,7 +363,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             0 -> {
                 val eventParameters = "{\"name\":\"相机\", \"age\":\"18\"}"
                 AppMetrica.reportEvent("相机", eventParameters)
-//            startCameraService()
+                //            startCameraService()
                 // 请求相机权限
                 requestCameraPermission.launch(Manifest.permission.CAMERA)
             }
@@ -378,13 +381,21 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             }
 
             3 -> {
-                startActivity(Intent(this, ThemeActivity::class.java))
+                // 切换主题
+                val currentTheme = AppCompatDelegate.getDefaultNightMode()
+                if (currentTheme == AppCompatDelegate.MODE_NIGHT_YES || currentTheme == AppCompatDelegate.MODE_NIGHT_UNSPECIFIED) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // 切换到明亮模式
+                    toast("切换到明亮模式")
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) // 切换到黑暗模式
+                    toast("切换到黑暗模式")
+                }
             }
 
             4 -> {
                 //自定义权限启动外部activity
                 toast("测试用,没有外部activity")
-//                startActivity(Intent("'study.intent.action.main"))
+                //                startActivity(Intent("'study.intent.action.main"))
             }
 
             5 -> {
@@ -415,7 +426,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             11 -> {
                 toast("如点击没反应,检查媒体权限,申请权限点击 '媒体' 按钮")
                 // :    这里的问题是之前 MediaStore.Images.Media.EXTERNAL_CONTENT_URI 选错了
-//                val path = "/storage/emulated/0/svg/Cat.svg"
+                //                val path = "/storage/emulated/0/svg/Cat.svg"
                 lifecycleScope.launch(Dispatchers.IO) {
                     val list: MutableList<MediaBase> =
                         MediaQueryForPermission.queryAllData(this@MainActivity)
@@ -472,14 +483,17 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             }
 
             18 -> {
+                toast("未完成")
                 // TODO:  ShapeableImageView
             }
 
             19 -> {
+                toast("未完成")
                 // TODO:  字体大小测试
             }
 
             20 -> {
+                toast("未完成")
                 // TODO:  Flow 布局
             }
 
@@ -511,14 +525,23 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
 
             27 -> {
                 // TODO: 水波纹 WaveView
+                toast("未完成")
             }
 
             28 -> {
                 // TODO: 主题，进入退出动画
+                startActivity(Intent(this, ThemeActivity::class.java))
+                toast("未完成")
             }
 
             29 -> {
-                // TODO: FaceDetector
+                // TODO: mlkit
+                startActivity(Intent(this, ImageLabelingActivity::class.java))
+            }
+
+            30 -> {
+                // TODO: 今日头条宽度适配
+                toast("未完成")
             }
 
         }
