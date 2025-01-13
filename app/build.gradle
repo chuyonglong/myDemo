@@ -170,4 +170,10 @@ dependencies {
     //ml kit图像标签
     implementation 'com.google.mlkit:image-labeling:17.0.9'
     implementation 'com.google.android.gms:play-services-mlkit-image-labeling:16.0.8'
+
+    implementation 'com.airbnb.android:lottie:6.4.0'
+
+    implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+
+
 }

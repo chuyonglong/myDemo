@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- 选中状态 -->
+    <item android:state_selected="true">
+        <vector android:width="20dp" android:height="20dp" android:viewportWidth="20" android:viewportHeight="20">
+            <path android:fillColor="#00000000" android:pathData="M10,10m-9.5,0a9.5,9.5 0,1 1,19 0a9.5,9.5 0,1 1,-19 0" android:strokeWidth="1" android:strokeColor="#FF8832" />
+            <path android:fillColor="#FF8832" android:pathData="M10,10m-10,0a10,10 0,1 1,20 0a10,10 0,1 1,-20 0" />
+            <path android:fillColor="#ffffff" android:pathData="M8.246,13.75C8.139,13.75 8.032,13.715 7.956,13.648L5.118,11.165C4.961,11.028 4.961,10.801 5.118,10.663C5.276,10.526 5.535,10.526 5.693,10.663L8.246,12.893L14.307,7.603C14.465,7.466 14.724,7.466 14.882,7.603C15.039,7.741 15.039,7.967 14.882,8.105L8.535,13.648C8.459,13.715 8.357,13.75 8.246,13.75Z" android:strokeWidth="0.5" android:strokeColor="#ffffff" />
+        </vector>
+    </item>
+
+    <!-- 默认状态-->
+    <item android:state_selected="false">
+        <vector android:width="20dp" android:height="20dp" android:viewportWidth="20" android:viewportHeight="20">
+            <path android:fillAlpha="0.33" android:fillColor="#D9D9D9" android:pathData="M10,10m-9.5,0a9.5,9.5 0,1 1,19 0a9.5,9.5 0,1 1,-19 0" android:strokeWidth="1" android:strokeColor="#ffffff" />
+        </vector>
+
+
+    </item>
+</selector>

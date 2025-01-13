@@ -4,12 +4,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.glidedemo.App
+import com.example.glidedemo.bean.SimilarImagesData
 import com.example.glidedemo.dao.TextDao
 import com.example.glidedemo.entity.TextData
+import com.example.glidedemo.interfaces.SimilarImagesDao
 
-@Database(entities = [TextData::class], version = 1, exportSchema = false)
+@Database(entities = [TextData::class, SimilarImagesData::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun TextDao(): TextDao
+
+    abstract fun SimilarImagesDao(): SimilarImagesDao
 
     companion object {
         private var db: AppDatabase? = null

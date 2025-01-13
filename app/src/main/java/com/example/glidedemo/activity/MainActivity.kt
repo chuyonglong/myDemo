@@ -80,6 +80,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "28" to "主题，进入退出动画",
             "29" to "mlkit图像标签",
             "30" to "今日头条宽度适配",
+            "31" to "相似图片",
 
             )
     }
@@ -355,6 +356,13 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             }
         }
 
+    private val similarPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            if (it.isNotEmpty()) {
+                startActivity(Intent(this, SimilarScanActivity::class.java))
+            }
+        }
+
 
     override fun onTagClick(view: View?, position: Int, parent: FlowLayout?): Boolean {
         Log.d("223366", "onTagClick:---onTagClick ----:${position}")
@@ -542,6 +550,16 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             30 -> {
                 // TODO: 今日头条宽度适配
                 toast("未完成")
+            }
+
+            31 -> {
+                val permissionEnum = GalleryPermissionUtils.checkMediaPermissionResult(this)
+                if (permissionEnum == GalleryPermissionUtils.PermissionEnum.NO_PERMISSIONS) {
+                    toast("没有权限----,请求权限!!!")
+                    GalleryPermissionUtils.requestMediaPermissions(similarPermissionLauncher)
+                } else {
+                    startActivity(Intent(this, SimilarScanActivity::class.java))
+                }
             }
 
         }

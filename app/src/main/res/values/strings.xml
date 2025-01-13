@@ -23,4 +23,29 @@
     <string name="notifications_content_3">Did you know? These similar photos are wasting your space!</string>
     <string name="notifications_content_4">Delete unused screenshots to free up storage.📱✨</string>
     <string name="notifications_content_5">Old screenshots detected. Clean up for more storage!</string>
+
+    <string name="scanning"> [ %1$d ]  files scanned, please wait…</string>
+
+    <string name="screenshot">Screenshot</string>
+    <string name="occupied">%s occupied</string>
+    <string name="scan_screenshot">%1$d Screenshots can be cleaned</string>
+    <string name="similar_photos">Similar Photos</string>
+    <string name="scan_similar">%1$d similar pictures can be cleaned</string>
+    <string name="smart_choice_progress">Processing, please wait.</string>
+    <string name="empty_similar">There are no similar images</string>
+    <string name="empty_screenshots">No screenshots</string>
+    <string name="no_images">No images to choose from</string>
+    <string name="nothing_item_selected">No item selected.</string>
+    <string name="delete_content">Are you sure you want to delete it?</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="cleaning_up">Cleaning up…</string>
+    <string name="loading_count">%s/%s</string>
+    <string name="similar_set">set %s</string>
+    <string name="unknown">Unknown</string>
+    <string name="items_selected">%d items Selected (%s)</string>
+    <string name="similar_cleanup_button">Cleanup (%1$s)</string>
+    <string name="cleanup_completed">%s cleanup completed</string>
+
+
 </resources>

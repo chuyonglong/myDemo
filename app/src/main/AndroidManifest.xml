@@ -104,6 +104,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
@@ -221,6 +222,23 @@
             android:name="com.example.glidedemo.activity.TabLayoutActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.glidedemo.activity.SimilarScanActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.glidedemo.activity.SimilarActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.glidedemo.activity.CleanupFinishActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.glidedemo.activity.CleanUpDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme" />
+
 
         <!--            android:theme="@android:style/Theme.DeviceDefault.NoActionBar"-->
         <activity

@@ -1,8 +1,10 @@
 package com.example.glidedemo.extensions
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import android.media.MediaScannerConnection
+import android.net.Uri
 import android.view.LayoutInflater
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
@@ -14,6 +16,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.viewbinding.ViewBinding
+import java.io.File
 
 
 fun <T : ViewBinding> ComponentActivity.viewBindings(
@@ -60,4 +63,13 @@ fun notifyGallery(context: Context, path: String) {
         context, arrayOf(path), null
     ) { _, _ ->
     }
+}
+
+
+fun AppCompatActivity.doSendBroadcast(filePath: String) {
+    sendBroadcast(
+        Intent(
+            Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, Uri.fromFile(File(filePath))
+        )
+    )
 }
