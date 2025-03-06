@@ -39,6 +39,7 @@ import io.appmetrica.analytics.AppMetrica
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.util.Calendar
 
 
 class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
@@ -81,6 +82,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "29" to "mlkit图像标签",
             "30" to "今日头条宽度适配",
             "31" to "相似图片",
+            "32" to "自定义view",
 
             )
     }
@@ -549,7 +551,8 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
 
             30 -> {
                 // TODO: 今日头条宽度适配
-                toast("未完成")
+//                toast("未完成")
+                onPerformSync(1737409829000L)
             }
 
             31 -> {
@@ -561,9 +564,114 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
                     startActivity(Intent(this, SimilarScanActivity::class.java))
                 }
             }
+            32 -> {
+                startActivity(Intent(this, CustomViewActivity::class.java))
+            }
 
         }
         return true
+    }
+
+
+    fun onPerformSync(
+        lastExitTime: Long
+    ) {
+        val currentTimeMillis = System.currentTimeMillis()
+        //不在通知显示时间内 返回
+        if (!isTimeInRangesNoon(currentTimeMillis) && !isTimeInRangesMorning(currentTimeMillis)) {
+            Log.d("223366", "onPerformSync: 不在通知显示时间内 返回")
+            return
+        }
+
+        //当前时间在 14.30之前 且退出时间在8.00之后不发通知
+        if (isNoonTime(currentTimeMillis) && !isMorningTime(lastExitTime)) {
+            Log.d("223366", "当前时间在 14.30之前  且退出时间在 12.30-14.30")
+            return
+        }
+        //当前时间在 14.30之后 退出时间也在 14.30之后不发通知
+        if (!isNoonTime(currentTimeMillis) && !isNoonTime(lastExitTime)) {
+            Log.d("223366", "onPerformSync: --当前时间在 14.30之后 且退出时间在 22.00-8.00")
+            return
+        }
+        //退后台至少1小时后发通知
+        if (currentTimeMillis - lastExitTime < 1000 * 60 * 60 * 1) {
+            Log.d("223366", "onPerformSync: --退后台至少1小时后发通知")
+            return
+        }
+
+        val permissionGranted = ContextCompat.checkSelfPermission(
+            this, Manifest.permission.POST_NOTIFICATIONS
+        ) == PackageManager.PERMISSION_GRANTED
+        //没权限
+        if (!permissionGranted) {
+            Log.d("223366", "onPerformSync: --没权限")
+            return
+        }
+    }
+
+
+    /**
+     * 判断当前时间是否在指定的时间范围内
+     * 显示通知时间  14.30-22.00
+     */
+    private fun isTimeInRangesNoon(time: Long): Boolean {
+        val currentCalendar = Calendar.getInstance()
+        currentCalendar.timeInMillis = time
+        val currentTimeInMinutes =
+            currentCalendar.get(Calendar.HOUR_OF_DAY) * 60 + currentCalendar.get(Calendar.MINUTE)
+
+        val range2Start = 14 * 60 + 30
+        val range2End = 22 * 60
+
+        // 检查当前时间是否在指定的时间范围内
+        return currentTimeInMinutes in range2Start..range2End
+    }
+
+
+    /**
+     * 判断当前时间是否在指定的时间范围内
+     * 显示时间 8.00-12.30
+     */
+    private fun isTimeInRangesMorning(time: Long): Boolean {
+        val currentCalendar = Calendar.getInstance()
+        currentCalendar.timeInMillis = time
+        val currentTimeInMinutes =
+            currentCalendar.get(Calendar.HOUR_OF_DAY) * 60 + currentCalendar.get(Calendar.MINUTE)
+
+        // 定义时间范围的分钟数
+        val range1Start = 8 * 60
+        val range1End = 12 * 60 + 30
+
+        // 检查当前时间是否在指定的时间范围内
+        return currentTimeInMinutes in range1Start..range1End
+    }
+
+    /**
+     *判断是在一天的 14.30 之前还是之后
+     *  14.30之前返回true
+     */
+    private fun isNoonTime(time: Long): Boolean {
+        val currentCalendar = Calendar.getInstance()
+        currentCalendar.timeInMillis = time
+        val currentTimeInMinutes =
+            currentCalendar.get(Calendar.HOUR_OF_DAY) * 60 + currentCalendar.get(Calendar.MINUTE)
+        val range2End = 14 * 60 + 30   // 14:30 -> 870 分钟
+        // 检查当前时间是否在指定的时间范围内
+        return currentTimeInMinutes in 0..range2End
+    }
+
+    /**
+     *判断是一天的 8.00之前还是之后
+     *  8.30之前返回true
+     */
+    private fun isMorningTime(time: Long): Boolean {
+        val currentCalendar = Calendar.getInstance()
+        currentCalendar.timeInMillis = time
+        val currentTimeInMinutes =
+            currentCalendar.get(Calendar.HOUR_OF_DAY) * 60 + currentCalendar.get(Calendar.MINUTE)
+        val range2End = 8 * 60 + 30   // 14:30 -> 870 分钟
+        // 检查当前时间是否在指定的时间范围内
+        return currentTimeInMinutes in 0..range2End
     }
 
 

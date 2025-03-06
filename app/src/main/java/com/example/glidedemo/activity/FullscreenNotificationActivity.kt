@@ -8,8 +8,6 @@ import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -24,9 +22,6 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
 import androidx.lifecycle.lifecycleScope
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.example.glidedemo.R
 import com.example.glidedemo.databinding.ActivityFullNotificationBinding
 import com.example.glidedemo.entity.NotificationData
@@ -135,7 +130,8 @@ class FullscreenNotificationActivity : AppCompatActivity() {
 //            val notificationManager = NotificationManagerCompat.from(this)
 //            notificationManager.notify(notificationId, builder.build())
             val aa = Html.fromHtml(String.format(getString(R.string.free_up_space, "11111")))
-            showCustomNotification()
+//            showCustomNotification()
+            aa()
         }
 
     }
@@ -170,7 +166,7 @@ class FullscreenNotificationActivity : AppCompatActivity() {
 
     private val fullscreenPendingIntent: PendingIntent
         get() {
-            val intent = Intent(this, TransparentActivity::class.java)
+            val intent = Intent(this, FullScreenTaskNotificationActivity::class.java)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             return PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
         }
@@ -200,7 +196,6 @@ class FullscreenNotificationActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             finish()
         }
-
 
 
     private val CHANNEL_ID_NOTIFICATION = "SYNC_CHANNEL_ID_NOTIFICATION"
@@ -316,8 +311,6 @@ class FullscreenNotificationActivity : AppCompatActivity() {
     }
 
 
-
-
     private val actionPendingIntent: PendingIntent
         get() {
             val intent = Intent(this, VaultActivity::class.java)
@@ -331,6 +324,104 @@ class FullscreenNotificationActivity : AppCompatActivity() {
 
         }
 
+
+    fun aa() {
+        val notificationDataList = arrayListOf(
+            NotificationData(
+                "11",
+                "1",
+                showBigImage = true,
+                confirmStr = "11",
+            ),
+
+            )
+
+
+        val notificationData = notificationDataList.random()
+        val notificationTitle = notificationData.title
+        val notificationContent = notificationData.content
+        val notificationConfirmStr = notificationData.confirmStr
+        val notificationCancelStr = notificationData.cancelStr
+        val showBigImage = notificationData.showBigImage
+        showCustomNotificationChatRecall111(
+            notificationTitle,
+            notificationContent,
+            notificationConfirmStr,
+            notificationCancelStr,
+            showBigImage,
+            actionPendingIntent,
+            NOTIFICATION_ID,
+        )
+    }
+
+
+    private fun showCustomNotificationChatRecall111(
+        titleStr: CharSequence,
+        content: CharSequence? = null,
+        confirmStr: String? = null,
+        cancelStr: String? = null,
+        showBigImage: Boolean = false,
+        intent: PendingIntent? = null,
+        notificationId: Int,
+    ) {
+        createNotificationChannelIfNeeded(CHANNEL_ID_NOTIFICATION, NOTIFICATION_TITLE)
+        if (ActivityCompat.checkSelfPermission(
+                this@FullscreenNotificationActivity, Manifest.permission.POST_NOTIFICATIONS
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            return
+        }
+
+        val notificationManager =
+            this.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        val bigLayout = RemoteViews(packageName, R.layout.big_custom_notification).apply {
+            setTextViewText(R.id.big_notification_title, titleStr)
+            val contentVisibilityInt = if (content == null) View.GONE else View.VISIBLE
+            setViewVisibility(R.id.big_notification_content, contentVisibilityInt)
+            content?.let {
+                setTextViewText(R.id.big_notification_content, content)
+            }
+            val cancelStrVisibilityInt = if (cancelStr == null) View.GONE else View.VISIBLE
+            setViewVisibility(R.id.big_notification_close, cancelStrVisibilityInt)
+            cancelStr?.let {
+                setTextViewText(R.id.big_notification_close, cancelStr)
+                setOnClickPendingIntent(R.id.big_notification_close, intent)
+            }
+            val confirmStrVisibilityInt = if (confirmStr == null) View.GONE else View.VISIBLE
+            setViewVisibility(R.id.big_notification_clean_now, confirmStrVisibilityInt)
+            confirmStr?.let {
+                setTextViewText(R.id.big_notification_clean_now, confirmStr)
+                setOnClickPendingIntent(R.id.big_notification_clean_now, intent)
+            }
+            val bigImageVisibilityInt = if (showBigImage) View.VISIBLE else View.GONE
+            setViewVisibility(R.id.big_notification_icon, bigImageVisibilityInt)
+        }
+
+
+        val smallLayout =
+            RemoteViews(packageName, R.layout.small_custom_notification).apply {
+                setTextViewText(R.id.small_notification_title, titleStr)
+                val contentVisibilityInt = if (content == null) View.GONE else View.VISIBLE
+                setViewVisibility(R.id.small_notification_content, contentVisibilityInt)
+                content?.let {
+                    setTextViewText(R.id.small_notification_content, content)
+                }
+                val cancelStrVisibilityInt = if (cancelStr == null) View.GONE else View.VISIBLE
+                setViewVisibility(R.id.small_notification_cancel, cancelStrVisibilityInt)
+                cancelStr?.let {
+                    setTextViewText(R.id.small_notification_cancel, cancelStr)
+                }
+
+            }
+
+
+        val builder = NotificationCompat.Builder(this, CHANNEL_ID_NOTIFICATION)
+            .setSmallIcon(R.drawable.ic_notification)
+            .setStyle(NotificationCompat.DecoratedCustomViewStyle())
+            .setCustomContentView(smallLayout).setCustomBigContentView(bigLayout).setOngoing(false)
+            .setAutoCancel(true).setContentIntent(intent).setShowWhen(true)
+        notificationManager.notify(notificationId, builder.build())
+    }
 
 
 }
