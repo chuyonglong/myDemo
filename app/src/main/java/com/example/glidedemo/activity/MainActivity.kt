@@ -83,6 +83,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "30" to "今日头条宽度适配",
             "31" to "相似图片",
             "32" to "自定义view",
+            "33" to "缓存清理",
 
             )
     }
@@ -566,6 +567,9 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             }
             32 -> {
                 startActivity(Intent(this, CustomViewActivity::class.java))
+            }
+            33 -> {
+                startActivity(Intent(this, CleaningTrashActivity::class.java))
             }
 
         }

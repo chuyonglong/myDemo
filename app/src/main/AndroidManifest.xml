@@ -96,6 +96,17 @@
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" />
+    <!--查询所有app-->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
+
+
+    <!-- 发送方和接收方均需声明 -->
+    <permission
+        android:name="com.example.BROADCAST_PERMISSION"
+        android:protectionLevel="signature" />
+
+    <!-- 接收方声明使用权限 -->
+    <uses-permission android:name="com.example.BROADCAST_PERMISSION" />
 
 
     <application
@@ -274,6 +285,17 @@
         <activity
             android:name="com.example.glidedemo.activity.CustomViewActivity"
             android:theme="@style/AppTheme" />
+        <activity
+            android:name="com.example.glidedemo.activity.CleaningTrashActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme" />
+
+        <activity
+            android:name="com.example.glidedemo.activity.AccessibilityAutoActivity"
+            android:launchMode="singleTask"
+            android:theme="@style/AppTheme" />
+
+
         <!--人脸识别-->
         <!--        <meta-data-->
         <!--            android:name="com.google.mlkit.vision.DEPENDENCIES"-->
@@ -292,6 +314,23 @@
             android:screenOrientation="portrait"
             android:taskAffinity="com.bible.text.notify"
             android:theme="@style/PopupStyleActivityTheme" />
+
+        <!--无障碍-->
+        <service
+            android:name="com.example.glidedemo.service.MyAccessibilityService"
+            android:enabled="true"
+            android:exported="false"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
+            android:process=":serviceAccessibility">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/accessibility_service_config" />
+        </service>
+
+
     </application>
 
 

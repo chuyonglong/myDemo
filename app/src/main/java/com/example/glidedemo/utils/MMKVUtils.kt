@@ -1,5 +1,6 @@
 package com.example.glidedemo.utils
 
+import com.example.glidedemo.App
 import com.tencent.mmkv.MMKV
 
 object MMKVUtils {
@@ -15,12 +16,15 @@ object MMKVUtils {
     private const val SIMILAR_COUNT: String = "mmkv_956a8b33ecf8e6e3"
 
 
-    private val mmkv by lazy {
-        MMKV.defaultMMKV()
-    }
+    private val mmkv = mmkv()
 
-    fun mmkv(): MMKV {
-        return mmkv
+
+    private fun mmkv(): MMKV {
+        val rootDir = MMKV.getRootDir()
+        if (rootDir == null) {
+            MMKV.initialize(App.getContext())
+        }
+        return MMKV.defaultMMKV()
     }
 
     var cleanupSize: String
