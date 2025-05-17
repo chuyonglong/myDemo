@@ -21,7 +21,6 @@ import androidx.lifecycle.lifecycleScope
 import com.example.glidedemo.base.BaseActivity
 import com.example.glidedemo.bean.MediaBase
 import com.example.glidedemo.bean.MediaData
-import com.example.glidedemo.bean.Medium
 import com.example.glidedemo.databinding.ActivityMainBinding
 import com.example.glidedemo.databinding.FlowlayoutTextBinding
 import com.example.glidedemo.extensions.PERMISSION_STRING_TYPE
@@ -50,67 +49,265 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
 
     private val mVals by lazy {
         linkedMapOf(
-            "0" to "相机",
-            "1" to "液晶时钟",
-            "2" to "健康",
-            "3" to "主题切换",
-            "4" to "跳转外部activity",
-            "5" to "媒体",
-            "6" to "点赞",
-            "7" to "room数据库",
-            "8" to "list adapter ",
-            "9" to "media list adapter",
-            "10" to "setresult",
-            "11" to "临时权限",
-            "12" to "全屏显示图片(未完成)",
-            "13" to "密码锁",
-            "14" to "后台拍照无预览相机",
-            "15" to "权限引导",
-            "16" to "吸顶",
-            "17" to "新手引导",
-            "18" to "ShapeableImageView",
-            "19" to "字体大小测试",
-            "20" to "Flow 布局 ",
-            "21" to "全屏通知",
-            "22" to "使用桌面背景",
-            "23" to "使tabLayout优化",
-            "24" to "透明activity",
-            "25" to "图像分类Interpreter",
-            "26" to "图像分类",
-            "27" to "水波纹",
-            "28" to "主题，进入退出动画",
-            "29" to "mlkit图像标签",
-            "30" to "今日头条宽度适配",
-            "31" to "相似图片",
-            "32" to "自定义view",
-            "33" to "缓存清理",
-            "34" to "缓存清理-文件夹权限",
+            "0" to "0:相机",
+            "1" to "1:液晶时钟",
+            "2" to "2:健康",
+            "3" to "3:主题切换",
+            "4" to "4:跳转外部activity",
+            "5" to "5:媒体",
+            "6" to "6:点赞",
+            "7" to "7:room数据库",
+            "8" to "8:list adapter ",
+            "9" to "9:media list adapter",
+            "10" to "10:setresult",
+            "11" to "11:临时权限",
+            "12" to "12:全屏显示图片(未完成)",
+            "13" to "13:密码锁",
+            "14" to "14:后台拍照无预览相机",
+            "15" to "15:权限引导",
+            "16" to "16:吸顶",
+            "17" to "17:新手引导",
+            "18" to "18:监听应用安装卸载",
+            "19" to "19:字体大小测试",
+            "20" to "20:Flow 布局 ",
+            "21" to "21:全屏通知",
+            "22" to "22:使用桌面背景",
+            "23" to "23:使tabLayout优化",
+            "24" to "24:透明activity",
+            "25" to "25:图像分类Interpreter",
+            "26" to "26:图像分类",
+            "27" to "27:水波纹",
+            "28" to "28:主题，进入退出动画",
+            "29" to "29:mlkit图像标签",
+            "30" to "30:今日头条宽度适配",
+            "31" to "31:相似图片",
+            "32" to "32:自定义view",
+            "33" to "33:缓存清理",
+            "34" to "34:缓存清理-文件夹权限",
+            "35" to "35:通知监听权限",
+        )
+    }
 
-            )
+    override fun onTagClick(view: View?, position: Int, parent: FlowLayout?): Boolean {
+        Log.d("223366", "onTagClick:---onTagClick ----:${position}")
+
+        when (position) {
+            0 -> {
+                val eventParameters = "{\"name\":\"相机\", \"age\":\"999\"}"
+                AppMetrica.reportEvent("相机", eventParameters)
+                //            startCameraService()
+                // 请求相机权限
+                requestCameraPermission.launch(Manifest.permission.CAMERA)
+            }
+
+            1 -> {
+                val eventParameters = "{\"name\":\"Alice\", \"age\":\"999\"}"
+                AppMetrica.reportEvent("New person", eventParameters)
+
+                startActivity(Intent(this, LedClockActivity::class.java))
+
+            }
+
+            2 -> {
+                checkPermissions()
+            }
+
+            3 -> {
+                // 切换主题
+                val currentTheme = AppCompatDelegate.getDefaultNightMode()
+                if (currentTheme == AppCompatDelegate.MODE_NIGHT_YES || currentTheme == AppCompatDelegate.MODE_NIGHT_UNSPECIFIED) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // 切换到明亮模式
+                    toast("切换到明亮模式")
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) // 切换到黑暗模式
+                    toast("切换到黑暗模式")
+                }
+            }
+
+            4 -> {
+                //自定义权限启动外部activity
+                toast("测试用,没有外部activity")
+                //                startActivity(Intent("'study.intent.action.main"))
+            }
+
+            5 -> {
+                startActivity(Intent(this, MediaActivity::class.java))
+            }
+
+            6 -> {
+                startActivity(Intent(this, LikeActivity::class.java))
+            }
+
+            7 -> {
+                startActivity(Intent(this, RoomActivity::class.java))
+            }
+
+            8 -> {
+                startActivity(Intent(this, ListAdapterActivity::class.java))
+            }
+
+            9 -> {
+                startActivity(Intent(this, MediaListActivity::class.java))
+            }
+
+            10 -> {
+                //setresult
+                startActivityForResult(Intent(this, LedClockActivity::class.java), 1001)
+            }
+
+            11 -> {
+                toast("如点击没反应,检查媒体权限,申请权限点击 '媒体' 按钮")
+                // :    这里的问题是之前 MediaStore.Images.Media.EXTERNAL_CONTENT_URI 选错了
+                //                val path = "/storage/emulated/0/svg/Cat.svg"
+                lifecycleScope.launch(Dispatchers.IO) {
+                    val list: MutableList<MediaBase> =
+                        MediaQueryForPermission.queryAllData(this@MainActivity)
+                    list.getOrNull(0)?.let {
+                        withContext(Dispatchers.Main) {
+                            val uri = Uri.withAppendedPath(
+                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+                                ((it as MediaData).id).toString()
+                            )
+                            val writeRequest = MediaStore.createWriteRequest(
+                                contentResolver, mutableListOf<Uri>(uri)
+                            ).intentSender
+                            moveVaultLauncher.launch(
+                                IntentSenderRequest.Builder(writeRequest).build()
+                            )
+                        }
+                    }
+
+                }
+            }
+
+            12 -> {
+                val permissionEnum = GalleryPermissionUtils.checkMediaPermissionResult(this)
+                if (permissionEnum == GalleryPermissionUtils.PermissionEnum.NO_PERMISSIONS) {
+                    toast("没有权限----,请求权限!!!")
+                    GalleryPermissionUtils.requestMediaPermissions(mediaPermissionLauncher)
+                } else {
+                    goPhotoDetailActivity()
+                }
+
+            }
+
+            13 -> {
+                startActivity(Intent(this, VaultActivity::class.java))
+            }
+
+            14 -> {
+                startActivity(Intent(this, BackgroundCameraActivity::class.java))
+            }
+
+            15 -> {
+                //权限引导
+                goUsagePermissionSetting()
+            }
+
+            16 -> {
+                //协调布局--吸顶
+                startActivity(Intent(this, CeilingActivity::class.java))
+            }
+
+            17 -> {
+                startActivity(Intent(this, GuideViewActivity::class.java))
+
+            }
+
+            18 -> {
+                //监听应用安装卸载
+                startActivity(Intent(this, InstallActivity::class.java))
+            }
+
+            19 -> {
+                toast("未完成")
+                // TODO:  字体大小测试
+            }
+
+            20 -> {
+                toast("未完成")
+                // TODO:  Flow 布局
+            }
+
+            21 -> {
+                // TODO: 全屏通知
+                startActivity(Intent(this, FullscreenNotificationActivity::class.java))
+            }
+
+            22 -> {
+                //  https://blog.csdn.net/zhyooo123/article/details/6698567
+            }
+
+            23 -> {
+                startActivity(Intent(this, TabLayoutActivity::class.java))
+            }
+
+            24 -> {
+                finish()
+                startActivity(Intent(this, TransparentActivity::class.java))
+            }
+
+            25 -> {
+                startActivity(Intent(this, ImageClassificationInterpreterActivity::class.java))
+            }
+
+            26 -> {
+                startActivity(Intent(this, ImageClassificationActivity::class.java))
+            }
+
+            27 -> {
+                // TODO: 水波纹 WaveView
+                toast("未完成")
+            }
+
+            28 -> {
+                // TODO: 主题，进入退出动画
+                startActivity(Intent(this, ThemeActivity::class.java))
+                toast("未完成")
+            }
+
+            29 -> {
+                // TODO: mlkit
+                startActivity(Intent(this, ImageLabelingActivity::class.java))
+            }
+
+            30 -> {
+                // TODO: 今日头条宽度适配
+//                toast("未完成")
+                onPerformSync(1737409829000L)
+            }
+
+            31 -> {
+                val permissionEnum = GalleryPermissionUtils.checkMediaPermissionResult(this)
+                if (permissionEnum == GalleryPermissionUtils.PermissionEnum.NO_PERMISSIONS) {
+                    toast("没有权限----,请求权限!!!")
+                    GalleryPermissionUtils.requestMediaPermissions(similarPermissionLauncher)
+                } else {
+                    startActivity(Intent(this, SimilarScanActivity::class.java))
+                }
+            }
+
+            32 -> {
+                startActivity(Intent(this, CustomViewActivity::class.java))
+            }
+
+            33 -> {
+                startActivity(Intent(this, CleaningTrashActivity::class.java))
+            }
+
+            34 -> {
+                startActivity(Intent(this, CleaningTrashFilePermissionActivity::class.java))
+            }
+
+            35 -> {
+                startActivity(Intent(this, NotificationListenerActivity::class.java))
+            }
+
+        }
+        return true
     }
 
 
-    private val requestPermissionLauncher: ActivityResultLauncher<Array<String>> =
-        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
-            Log.d(
-                "223366",
-                "registerForActivityResult: ----registerForActivityResult---registerForActivityResult---registerForActivityResult"
-            )
-            // 处理权限请求结果
-            val fineLocationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
-            val coarseLocationGranted =
-                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
-
-            if (fineLocationGranted || coarseLocationGranted) {
-                // 权限被授予
-                startHealthService()
-            } else {
-                // 权限被拒绝
-                toast("权限被拒绝")
-            }
-        }
-
-    var aa: Medium? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -368,219 +565,6 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
         }
 
 
-    override fun onTagClick(view: View?, position: Int, parent: FlowLayout?): Boolean {
-        Log.d("223366", "onTagClick:---onTagClick ----:${position}")
-
-        when (position) {
-            0 -> {
-                val eventParameters = "{\"name\":\"相机\", \"age\":\"18\"}"
-                AppMetrica.reportEvent("相机", eventParameters)
-                //            startCameraService()
-                // 请求相机权限
-                requestCameraPermission.launch(Manifest.permission.CAMERA)
-            }
-
-            1 -> {
-                val eventParameters = "{\"name\":\"Alice\", \"age\":\"18\"}"
-                AppMetrica.reportEvent("New person", eventParameters)
-
-                startActivity(Intent(this, LedClockActivity::class.java))
-
-            }
-
-            2 -> {
-                checkPermissions()
-            }
-
-            3 -> {
-                // 切换主题
-                val currentTheme = AppCompatDelegate.getDefaultNightMode()
-                if (currentTheme == AppCompatDelegate.MODE_NIGHT_YES || currentTheme == AppCompatDelegate.MODE_NIGHT_UNSPECIFIED) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO) // 切换到明亮模式
-                    toast("切换到明亮模式")
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES) // 切换到黑暗模式
-                    toast("切换到黑暗模式")
-                }
-            }
-
-            4 -> {
-                //自定义权限启动外部activity
-                toast("测试用,没有外部activity")
-                //                startActivity(Intent("'study.intent.action.main"))
-            }
-
-            5 -> {
-                startActivity(Intent(this, MediaActivity::class.java))
-            }
-
-            6 -> {
-                startActivity(Intent(this, LikeActivity::class.java))
-            }
-
-            7 -> {
-                startActivity(Intent(this, RoomActivity::class.java))
-            }
-
-            8 -> {
-                startActivity(Intent(this, ListAdapterActivity::class.java))
-            }
-
-            9 -> {
-                startActivity(Intent(this, MediaListActivity::class.java))
-            }
-
-            10 -> {
-                //setresult
-                startActivityForResult(Intent(this, LedClockActivity::class.java), 1001)
-            }
-
-            11 -> {
-                toast("如点击没反应,检查媒体权限,申请权限点击 '媒体' 按钮")
-                // :    这里的问题是之前 MediaStore.Images.Media.EXTERNAL_CONTENT_URI 选错了
-                //                val path = "/storage/emulated/0/svg/Cat.svg"
-                lifecycleScope.launch(Dispatchers.IO) {
-                    val list: MutableList<MediaBase> =
-                        MediaQueryForPermission.queryAllData(this@MainActivity)
-                    list.getOrNull(0)?.let {
-                        withContext(Dispatchers.Main) {
-                            val uri = Uri.withAppendedPath(
-                                MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                                ((it as MediaData).id).toString()
-                            )
-                            val writeRequest = MediaStore.createWriteRequest(
-                                contentResolver, mutableListOf<Uri>(uri)
-                            ).intentSender
-                            moveVaultLauncher.launch(
-                                IntentSenderRequest.Builder(writeRequest).build()
-                            )
-                        }
-                    }
-
-                }
-            }
-
-            12 -> {
-                val permissionEnum = GalleryPermissionUtils.checkMediaPermissionResult(this)
-                if (permissionEnum == GalleryPermissionUtils.PermissionEnum.NO_PERMISSIONS) {
-                    toast("没有权限----,请求权限!!!")
-                    GalleryPermissionUtils.requestMediaPermissions(mediaPermissionLauncher)
-                } else {
-                    goPhotoDetailActivity()
-                }
-
-            }
-
-            13 -> {
-                startActivity(Intent(this, VaultActivity::class.java))
-            }
-
-            14 -> {
-                startActivity(Intent(this, BackgroundCameraActivity::class.java))
-            }
-
-            15 -> {
-                //权限引导
-                goUsagePermissionSetting()
-            }
-
-            16 -> {
-                //协调布局--吸顶
-                startActivity(Intent(this, CeilingActivity::class.java))
-            }
-
-            17 -> {
-                startActivity(Intent(this, GuideViewActivity::class.java))
-
-            }
-
-            18 -> {
-                toast("未完成")
-                // TODO:  ShapeableImageView
-            }
-
-            19 -> {
-                toast("未完成")
-                // TODO:  字体大小测试
-            }
-
-            20 -> {
-                toast("未完成")
-                // TODO:  Flow 布局
-            }
-
-            21 -> {
-                // TODO: 全屏通知
-                startActivity(Intent(this, FullscreenNotificationActivity::class.java))
-            }
-
-            22 -> {
-                //  https://blog.csdn.net/zhyooo123/article/details/6698567
-            }
-
-            23 -> {
-                startActivity(Intent(this, TabLayoutActivity::class.java))
-            }
-
-            24 -> {
-                finish()
-                startActivity(Intent(this, TransparentActivity::class.java))
-            }
-
-            25 -> {
-                startActivity(Intent(this, ImageClassificationInterpreterActivity::class.java))
-            }
-
-            26 -> {
-                startActivity(Intent(this, ImageClassificationActivity::class.java))
-            }
-
-            27 -> {
-                // TODO: 水波纹 WaveView
-                toast("未完成")
-            }
-
-            28 -> {
-                // TODO: 主题，进入退出动画
-                startActivity(Intent(this, ThemeActivity::class.java))
-                toast("未完成")
-            }
-
-            29 -> {
-                // TODO: mlkit
-                startActivity(Intent(this, ImageLabelingActivity::class.java))
-            }
-
-            30 -> {
-                // TODO: 今日头条宽度适配
-//                toast("未完成")
-                onPerformSync(1737409829000L)
-            }
-
-            31 -> {
-                val permissionEnum = GalleryPermissionUtils.checkMediaPermissionResult(this)
-                if (permissionEnum == GalleryPermissionUtils.PermissionEnum.NO_PERMISSIONS) {
-                    toast("没有权限----,请求权限!!!")
-                    GalleryPermissionUtils.requestMediaPermissions(similarPermissionLauncher)
-                } else {
-                    startActivity(Intent(this, SimilarScanActivity::class.java))
-                }
-            }
-            32 -> {
-                startActivity(Intent(this, CustomViewActivity::class.java))
-            }
-            33 -> {
-                startActivity(Intent(this, CleaningTrashActivity::class.java))
-            }
-            34 -> {
-                startActivity(Intent(this, CleaningTrashFilePermissionActivity::class.java))
-            }
-
-        }
-        return true
-    }
-
-
     fun onPerformSync(
         lastExitTime: Long
     ) {
@@ -681,6 +665,26 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
         // 检查当前时间是否在指定的时间范围内
         return currentTimeInMinutes in 0..range2End
     }
+
+    private val requestPermissionLauncher: ActivityResultLauncher<Array<String>> =
+        registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { permissions ->
+            Log.d(
+                "223366",
+                "registerForActivityResult: ----registerForActivityResult---registerForActivityResult---registerForActivityResult"
+            )
+            // 处理权限请求结果
+            val fineLocationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
+            val coarseLocationGranted =
+                permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
+
+            if (fineLocationGranted || coarseLocationGranted) {
+                // 权限被授予
+                startHealthService()
+            } else {
+                // 权限被拒绝
+                toast("权限被拒绝")
+            }
+        }
 
 
 }

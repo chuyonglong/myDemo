@@ -49,6 +49,7 @@
 
 
     <string name="accessibility_service_description">此服务用于帮助用户自动操作某些任务，提高使用体验。</string>
+    <string name="permission_request_result">权限申请结果：%s</string>
 
 
 </resources>

@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.glidedemo.adapter.AppCacheListAdapter
 import com.example.glidedemo.databinding.ActivityCleaningTrashBinding
 import com.example.glidedemo.extensions.PERMISSION_STRING_TYPE
+import com.example.glidedemo.extensions.goUsagePermissionSetting
 import com.example.glidedemo.extensions.toast
 import com.example.glidedemo.extensions.viewBindings
 import com.example.glidedemo.service.MyAccessibilityService
@@ -93,19 +94,9 @@ class CleaningTrashActivity : AppCompatActivity(), AppCacheListAdapter.OnItemCli
             toast("权限已经获取")
             binding.permissionText.text = "权限已经获取"
         } else {
-            goUsagePermissionSetting()
+             goUsagePermissionSetting(this,permissionUsageAccessActivityResultLauncher)
         }
 
-    }
-
-
-    private fun goUsagePermissionSetting() {
-        val intent = Intent(
-            this@CleaningTrashActivity, PermissionSettingActivity::class.java
-        ).apply {
-            putExtra(PERMISSION_STRING_TYPE, Settings.ACTION_USAGE_ACCESS_SETTINGS)
-        }
-        permissionUsageAccessActivityResultLauncher.launch(intent)
     }
 
     private val permissionUsageAccessActivityResultLauncher =

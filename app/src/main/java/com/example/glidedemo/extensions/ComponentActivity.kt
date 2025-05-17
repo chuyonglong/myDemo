@@ -1,21 +1,27 @@
 package com.example.glidedemo.extensions
 
+import android.app.Activity
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.provider.Settings
 import android.view.LayoutInflater
 import androidx.activity.ComponentActivity
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.SystemBarStyle
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.viewbinding.ViewBinding
+import com.example.glidedemo.activity.PermissionSettingActivity
+import com.example.glidedemo.utils.PermissionUtil
 import java.io.File
 
 
@@ -73,3 +79,17 @@ fun AppCompatActivity.doSendBroadcast(filePath: String) {
         )
     )
 }
+
+
+fun AppCompatActivity.goUsagePermissionSetting(
+    context: Context, activityResultLauncher: ActivityResultLauncher<Intent>
+) {
+    val intent = Intent(
+        context, PermissionSettingActivity::class.java
+    ).apply {
+        putExtra(PERMISSION_STRING_TYPE, Settings.ACTION_USAGE_ACCESS_SETTINGS)
+    }
+    activityResultLauncher.launch(intent)
+}
+
+
