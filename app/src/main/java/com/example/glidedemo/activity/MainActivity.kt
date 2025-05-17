@@ -84,6 +84,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "31" to "相似图片",
             "32" to "自定义view",
             "33" to "缓存清理",
+            "34" to "缓存清理-文件夹权限",
 
             )
     }
@@ -570,6 +571,9 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             }
             33 -> {
                 startActivity(Intent(this, CleaningTrashActivity::class.java))
+            }
+            34 -> {
+                startActivity(Intent(this, CleaningTrashFilePermissionActivity::class.java))
             }
 
         }

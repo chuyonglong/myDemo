@@ -9,7 +9,9 @@ import android.net.Uri
 import android.os.Build
 import android.os.Environment
 import android.provider.Settings
+import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.FragmentActivity
 
 object PermissionUtil {
 
@@ -135,6 +137,54 @@ object PermissionUtil {
             context,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
         ) == PackageManager.PERMISSION_GRANTED
+    }
+
+
+    /**
+     * 判断是否有存储权限
+     */
+
+    fun hasStoragePermission(activity: FragmentActivity): Boolean {
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
+            Environment.isExternalStorageManager()
+        } else {
+            ContextCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.READ_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED && ContextCompat.checkSelfPermission(
+                activity,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) == PackageManager.PERMISSION_GRANTED
+        }
+    }
+
+
+    /**
+     * 请求存储权限
+     */
+    fun requestPermissions(permissionLauncher: ActivityResultLauncher<Array<String>>) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
+            permissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.READ_MEDIA_IMAGES,
+                    Manifest.permission.READ_MEDIA_VIDEO,
+                    Manifest.permission.READ_MEDIA_VISUAL_USER_SELECTED
+                )
+            )
+        } else if (Build.VERSION.SDK_INT == Build.VERSION_CODES.TIRAMISU) {
+            permissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.READ_MEDIA_IMAGES, Manifest.permission.READ_MEDIA_VIDEO
+                )
+            )
+        } else {
+            permissionLauncher.launch(
+                arrayOf(
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+            )
+        }
     }
 }
 

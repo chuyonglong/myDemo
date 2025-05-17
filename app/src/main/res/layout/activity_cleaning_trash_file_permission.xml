@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <TextView
+        android:id="@+id/permission_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/usage_permission_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_44_radius"
+        android:backgroundTint="@color/white"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:text="usage permission"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/get_data_button"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/permission_text" />
+
+    <TextView
+        android:id="@+id/get_data_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_44_radius"
+        android:backgroundTint="@color/white"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:text="Get Data"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toStartOf="@+id/get_accessibility_button"
+        app:layout_constraintStart_toEndOf="@+id/usage_permission_button"
+        app:layout_constraintTop_toBottomOf="@+id/permission_text" />
+
+    <TextView
+        android:id="@+id/get_accessibility_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/bg_44_radius"
+        android:backgroundTint="@color/white"
+        android:paddingHorizontal="16dp"
+        android:paddingVertical="8dp"
+        android:text="accessibility"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/get_data_button"
+        app:layout_constraintTop_toBottomOf="@+id/permission_text" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/app_cache_list"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingVertical="32dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/get_data_button" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

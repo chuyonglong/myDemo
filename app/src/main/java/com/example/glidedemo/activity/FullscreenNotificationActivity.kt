@@ -139,7 +139,7 @@ class FullscreenNotificationActivity : AppCompatActivity() {
     private fun createNotificationChannelIfNeeded(channelId: String, name: String) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val serviceChannel = NotificationChannel(
-                channelId, name, NotificationManager.IMPORTANCE_HIGH
+                channelId, name, NotificationManager.IMPORTANCE_HIGH////弹出全屏只跟这个优先级有关系
             )
             val manager = getSystemService(NotificationManager::class.java)
             manager.createNotificationChannel(serviceChannel)
@@ -150,7 +150,6 @@ class FullscreenNotificationActivity : AppCompatActivity() {
     private fun sendFullscreenNotification() {
         val builder = NotificationCompat.Builder(this, CHANNEL_ID).setSmallIcon(R.drawable.cat)
             .setContentTitle("全屏通知").setContentText("这是一条全屏通知的内容。")
-            .setPriority(NotificationCompat.PRIORITY_HIGH) // 设置高优先级
             .setFullScreenIntent(fullscreenPendingIntent, true) // 设置全屏意图
 
         val notificationManager = NotificationManagerCompat.from(this)

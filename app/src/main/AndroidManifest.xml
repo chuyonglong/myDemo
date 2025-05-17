@@ -8,109 +8,68 @@
         android:required="false" />
     <uses-feature
         android:name="android.hardware.camera"
-        android:required="false" />
-    <!--    相机-->
-
-    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" />
-
-    <!-- Devices running Android 12L (API level 32) or lower  -->
+        android:required="false" /> <!-- 相机 -->
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" /> <!-- Devices running Android 12L (API level 32) or lower -->
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
-        android:maxSdkVersion="32" />
-    <!-- Devices running Android 13 (API level 33) or higher -->
+        android:maxSdkVersion="32" /> <!-- Devices running Android 13 (API level 33) or higher -->
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
-    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" />
-
-    <!-- To handle the reselection within the app on Android 14 (API level 34) -->
+    <uses-permission android:name="android.permission.READ_MEDIA_AUDIO" /> <!-- To handle the reselection within the app on Android 14 (API level 34) -->
     <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED" />
     <uses-permission android:name="android.permission.ACCESS_MEDIA_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_MMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
-
-    <!--相机权限-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 相机权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
-
-
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
     <uses-permission android:name="android.permission.BODY_SENSORS" />
     <uses-permission android:name="android.permission.HIGH_SAMPLING_RATE_SENSORS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_HEALTH" />
-
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK" />
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MEDIA_PROJECTION" />
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_MICROPHONE" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED" />
-    <!--    <uses-permission android:name="android.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND" />-->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED" /> <!-- <uses-permission android:name="android.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND" /> -->
     <uses-permission android:name="android.permission.REQUEST_COMPANION_START_FOREGROUND_SERVICES_FROM_BACKGROUND" />
-
-
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
-    <!--    <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" />-->
-    <!--    <uses-permission android:name="android.permission.BLUETOOTH_SCAN" />-->
-    <!--    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />-->
-    <!--    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />-->
-    <!--    <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" />-->
-    <!--    <uses-permission android:name="android.permission.NFC" />-->
-    <!--    <uses-permission android:name="android.permission.TRANSMIT_IR" />-->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" /> <!-- <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> -->
+    <!-- <uses-permission android:name="android.permission.BLUETOOTH_SCAN" /> -->
+    <!-- <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> -->
+    <!-- <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> -->
+    <!-- <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" /> -->
+    <!-- <uses-permission android:name="android.permission.NFC" /> -->
+    <!-- <uses-permission android:name="android.permission.TRANSMIT_IR" /> -->
     <uses-permission android:name="android.permission.UWB_RANGING" />
-
-
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-
-
-    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
-
-    <!--    外部提供的自定义权限-->
-    <uses-permission android:name="zero.permission.main" />
-
-    <!--    提供给外部的自定义权限-->
-    <permission android:name="aa.permission.aa" />
-
-    <!--网络权限 appsflyer-->
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" /> <!-- 外部提供的自定义权限 -->
+    <uses-permission android:name="zero.permission.main" /> <!-- 提供给外部的自定义权限 -->
+    <permission android:name="aa.permission.aa" /> <!-- 网络权限 appsflyer -->
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
-    <!--查看app 使用情况-->
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 查看app 使用情况 -->
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
-        tools:ignore="ProtectedPermissions" />
-    <!--查询所有app-->
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
-
-
-    <!-- 发送方和接收方均需声明 -->
+        tools:ignore="ProtectedPermissions" /> <!-- 查询所有app -->
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" /> <!-- 发送方和接收方均需声明 -->
     <permission
         android:name="com.example.BROADCAST_PERMISSION"
-        android:protectionLevel="signature" />
-
-    <!-- 接收方声明使用权限 -->
+        android:protectionLevel="signature" /> <!-- 接收方声明使用权限 -->
     <uses-permission android:name="com.example.BROADCAST_PERMISSION" />
 
-
     <application
-        android:name="com.example.glidedemo.App"
+        android:name=".App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -122,40 +81,39 @@
         android:theme="@style/AppTheme"
         tools:replace="android:fullBackupContent,android:dataExtractionRules,android:allowBackup"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.CleaningTrashFilePermissionActivity"
+            android:exported="false" />
+
         <service
-            android:name="com.example.glidedemo.foreground.services.CameraService"
+            android:name=".foreground.services.CameraService"
             android:exported="false"
             android:foregroundServiceType="camera" />
-
         <service
-            android:name="com.example.glidedemo.foreground.services.SpecialUseService"
+            android:name=".foreground.services.SpecialUseService"
             android:exported="false"
             android:foregroundServiceType="specialUse" />
-
         <service
-            android:name="com.example.glidedemo.foreground.services.ConnectedDeviceService"
+            android:name=".foreground.services.ConnectedDeviceService"
             android:exported="false"
             android:foregroundServiceType="connectedDevice" />
-
-
         <service
-            android:name="com.example.glidedemo.foreground.services.HealthService"
+            android:name=".foreground.services.HealthService"
             android:exported="false"
             android:foregroundServiceType="health" />
 
-
         <activity
-            android:name="com.example.glidedemo.activity.LedClockActivity"
+            android:name=".activity.LedClockActivity"
             android:exported="true"
             android:launchMode="singleTask"
             android:permission="aa.permission.aa"
             android:theme="@style/AppTheme">
             <intent-filter>
                 <category android:name="android.intent.category.DEFAULT" />
+
                 <action android:name="com.aa.intent.action.aa" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".activity.MainActivity"
             android:exported="true"
@@ -166,158 +124,142 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
             <meta-data
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
-        <activity android:name="com.example.glidedemo.activity.SecondActivity" />
-        <activity android:name="com.example.glidedemo.activity.ThreeActivity" />
+        <activity android:name=".activity.SecondActivity" />
+        <activity android:name=".activity.ThreeActivity" />
 
         <receiver
-            android:name="com.example.glidedemo.utils.SmsReceiver"
+            android:name=".utils.SmsReceiver"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
             </intent-filter>
         </receiver>
 
-
         <activity
-            android:name="com.example.glidedemo.activity.TelephonyActivity"
-            android:theme="@style/AppTheme" />
-
-        <activity
-            android:name="com.example.glidedemo.activity.MediaActivity"
+            android:name=".activity.TelephonyActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.LikeActivity"
-            android:theme="@style/AppTheme" />
-
-        <activity
-            android:name="com.example.glidedemo.activity.RoomActivity"
+            android:name=".activity.MediaActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.ListAdapterActivity"
+            android:name=".activity.LikeActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.MediaListActivity"
+            android:name=".activity.RoomActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.PhotoDetailActivity"
+            android:name=".activity.ListAdapterActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.VaultActivity"
+            android:name=".activity.MediaListActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.PhotoDetailActivity"
+            android:theme="@style/AppTheme" />
+        <activity
+            android:name=".activity.VaultActivity"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.BackgroundCameraActivity"
+            android:name=".activity.BackgroundCameraActivity"
             android:theme="@style/AppTheme" />
-
         <activity
-            android:name="com.example.glidedemo.activity.PermissionSettingActivity"
+            android:name=".activity.PermissionSettingActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.CeilingActivity"
+            android:name=".activity.CeilingActivity"
             android:launchMode="singleTask"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.PermissionGuideActivity"
+            android:name=".activity.PermissionGuideActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:launchMode="singleTask"
             android:theme="@style/permission_style" />
         <activity
-            android:name="com.example.glidedemo.activity.GuideViewActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:theme="@style/AppTheme" />
-
-        <activity
-            android:name="com.example.glidedemo.activity.TabLayoutActivity"
+            android:name=".activity.GuideViewActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.SimilarScanActivity"
+            android:name=".activity.TabLayoutActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.SimilarActivity"
+            android:name=".activity.SimilarScanActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.CleanupFinishActivity"
+            android:name=".activity.SimilarActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.CleanUpDetailActivity"
+            android:name=".activity.CleanupFinishActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme" />
-
-
-        <!--            android:theme="@android:style/Theme.DeviceDefault.NoActionBar"-->
         <activity
-            android:name="com.example.glidedemo.activity.FullscreenNotificationActivity"
+            android:name=".activity.CleanUpDetailActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:theme="@style/AppTheme" /> <!-- android:theme="@android:style/Theme.DeviceDefault.NoActionBar" -->
+        <activity
+            android:name=".activity.FullscreenNotificationActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-
         <activity
-            android:name="com.example.glidedemo.activity.TransparentActivity"
+            android:name=".activity.TransparentActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:launchMode="singleTask"
             android:screenOrientation="fullSensor"
             android:taskAffinity="kjv.bible.kingjamesbible.notify"
             android:theme="@style/Theme.OverlayApply" />
-
-        <activity android:name="com.example.glidedemo.activity.ThemeActivity" />
+        <activity android:name=".activity.ThemeActivity" />
         <activity
-            android:name="com.example.glidedemo.activity.ImageClassificationInterpreterActivity"
+            android:name=".activity.ImageClassificationInterpreterActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.ImageClassificationActivity"
+            android:name=".activity.ImageClassificationActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.ImageLabelingActivity"
+            android:name=".activity.ImageLabelingActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.CustomViewActivity"
+            android:name=".activity.CustomViewActivity"
             android:theme="@style/AppTheme" />
         <activity
-            android:name="com.example.glidedemo.activity.CleaningTrashActivity"
+            android:name=".activity.CleaningTrashActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/AppTheme" />
-
         <activity
-            android:name="com.example.glidedemo.activity.AccessibilityAutoActivity"
+            android:name=".activity.AccessibilityAutoActivity"
             android:launchMode="singleTask"
-            android:theme="@style/AppTheme" />
-
-
-        <!--人脸识别-->
-        <!--        <meta-data-->
-        <!--            android:name="com.google.mlkit.vision.DEPENDENCIES"-->
-        <!--            android:value="face" />-->
-
-        <!--        图像标签-->
+            android:theme="@style/AppTheme" /> <!-- 人脸识别 -->
+        <!-- <meta-data -->
+        <!-- android:name="com.google.mlkit.vision.DEPENDENCIES" -->
+        <!-- android:value="face" /> -->
+        <!-- 图像标签 -->
         <meta-data
             android:name="com.google.mlkit.vision.DEPENDENCIES"
             android:value="barcode,face,ocr,ocr_chinese,ocr_devanagari,ocr_japanese,ocr_korean,ica,custom_ica,subject_segment" />
 
         <activity
-            android:name="com.example.glidedemo.activity.FullScreenTaskNotificationActivity"
+            android:name=".activity.FullScreenTaskNotificationActivity"
             android:excludeFromRecents="true"
             android:exported="false"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             android:taskAffinity="com.bible.text.notify"
-            android:theme="@style/PopupStyleActivityTheme" />
-
-        <!--无障碍-->
+            android:theme="@style/PopupStyleActivityTheme" /> <!-- 无障碍 -->
         <service
-            android:name="com.example.glidedemo.service.MyAccessibilityService"
+            android:name=".service.MyAccessibilityService"
             android:enabled="true"
             android:exported="false"
             android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE"
@@ -325,13 +267,11 @@
             <intent-filter>
                 <action android:name="android.accessibilityservice.AccessibilityService" />
             </intent-filter>
+
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/accessibility_service_config" />
         </service>
-
-
     </application>
-
 
 </manifest>

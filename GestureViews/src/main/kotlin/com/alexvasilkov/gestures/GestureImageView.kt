@@ -7,7 +7,7 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.widget.ImageView
 
-class GestureImageView constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : ImageView(context, attrs, defStyle) {
+class GestureImageView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyle: Int = 0) : ImageView(context, attrs, defStyle) {
     private val imageViewMatrix = Matrix()
     var controller = GestureController(this)
 
