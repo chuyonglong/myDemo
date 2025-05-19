@@ -61,17 +61,16 @@
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
         tools:ignore="ProtectedPermissions" /> <!-- 查看app 使用情况 -->
-
-    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
-        tools:ignore="QueryAllPackagesPermission" /><!-- 查询所有app -->
+    <uses-permission
+        android:name="android.permission.QUERY_ALL_PACKAGES"
+        tools:ignore="QueryAllPackagesPermission" /> <!-- 查询所有app -->
     <permission
         android:name="com.example.BROADCAST_PERMISSION"
-        android:protectionLevel="signature" />  <!-- 发送方和接收方均需声明 -->
-
+        android:protectionLevel="signature" /> <!-- 发送方和接收方均需声明 -->
     <uses-permission android:name="com.example.BROADCAST_PERMISSION" /> <!-- 接收方声明使用权限 -->
     <!-- 通知监听权限 -->
-
-    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" />
+    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" /> <!-- 请求忽略电池优化 -->
+    <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <application
         android:name=".App"
@@ -86,6 +85,12 @@
         android:theme="@style/AppTheme"
         tools:replace="android:fullBackupContent,android:dataExtractionRules,android:allowBackup"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.SimilarMainActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.AlbumsActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.AppLockActivity"
             android:exported="false" />

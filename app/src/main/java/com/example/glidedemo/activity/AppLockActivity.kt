@@ -5,8 +5,10 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.PowerManager
 import android.provider.Settings
 import android.util.Log
 import android.view.View
@@ -42,8 +44,9 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
     private val mVals by lazy {
         linkedMapOf(
             "0" to "0:查看使用情况权限",
-            "1" to "1:注册广播接收器",
+            "1" to "1:应用安装/卸载广播",
             "2" to "2:请求通知监听权限",
+            "3" to "3:禁用电池优化",
         )
     }
 
@@ -105,6 +108,10 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
                     toast("通知监听未授权,请求权限")
                     openNotificationPermissionSettings(this)
                 }
+            }
+
+            3 -> {
+                requestDisableBatteryOptimization(this)
             }
 
         }
@@ -203,6 +210,29 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
             else -> {
                 toast("请到系统设置中开启通知监听权限")
             }
+        }
+    }
+
+
+    /**
+     * 检查当前应用是否已被排除在电池优化之外
+     */
+    private fun isIgnoringBatteryOptimizations(context: Context): Boolean {
+        val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
+        return powerManager.isIgnoringBatteryOptimizations(context.packageName)
+    }
+
+
+    private fun requestDisableBatteryOptimization(activity: Activity) {
+        if (!isIgnoringBatteryOptimizations(this)) {
+            toast("请求禁用电池优化")
+            val intent = Intent().apply {
+                action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+                data = Uri.parse("package:$packageName")
+            }
+            activity.startActivity(intent)
+        } else {
+            toast("电池优化已禁用")
         }
     }
 }
