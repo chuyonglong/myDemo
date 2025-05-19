@@ -87,7 +87,7 @@
         tools:replace="android:fullBackupContent,android:dataExtractionRules,android:allowBackup"
         tools:targetApi="31">
         <activity
-            android:name=".activity.InstallActivity"
+            android:name=".activity.AppLockActivity"
             android:exported="false" />
         <activity
             android:name=".activity.NotificationListenerActivity"

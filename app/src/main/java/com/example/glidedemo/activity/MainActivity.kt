@@ -67,7 +67,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "15" to "15:权限引导",
             "16" to "16:吸顶",
             "17" to "17:新手引导",
-            "18" to "18:监听应用安装卸载",
+            "18" to "18:应用锁相关",
             "19" to "19:字体大小测试",
             "20" to "20:Flow 布局 ",
             "21" to "21:全屏通知",
@@ -84,7 +84,6 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "32" to "32:自定义view",
             "33" to "33:缓存清理",
             "34" to "34:缓存清理-文件夹权限",
-            "35" to "35:通知监听权限",
         )
     }
 
@@ -216,7 +215,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
 
             18 -> {
                 //监听应用安装卸载
-                startActivity(Intent(this, InstallActivity::class.java))
+                startActivity(Intent(this, AppLockActivity::class.java))
             }
 
             19 -> {
@@ -297,10 +296,6 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
 
             34 -> {
                 startActivity(Intent(this, CleaningTrashFilePermissionActivity::class.java))
-            }
-
-            35 -> {
-                startActivity(Intent(this, NotificationListenerActivity::class.java))
             }
 
         }
