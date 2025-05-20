@@ -14,6 +14,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
+import androidx.lifecycle.lifecycleScope
 import com.example.glidedemo.base.BaseActivity
 import com.example.glidedemo.databinding.ActivityMainBinding
 import com.example.glidedemo.databinding.FlowlayoutTextBinding
@@ -23,11 +24,14 @@ import com.example.glidedemo.foreground.services.CameraService
 import com.example.glidedemo.foreground.services.ConnectedDeviceService
 import com.example.glidedemo.foreground.services.HealthService
 import com.example.glidedemo.permission.GalleryPermissionUtils
+import com.example.glidedemo.utils.notificationEntityDB
 import com.example.glidedemo.views.flowlayout.FlowLayout
 import com.example.glidedemo.views.flowlayout.TagAdapter
 import com.example.glidedemo.views.flowlayout.TagFlowLayout
 import com.tencent.mmkv.MMKV
 import io.appmetrica.analytics.AppMetrica
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.util.Calendar
 
 
@@ -265,6 +269,12 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             setOnSelectListener(this@MainActivity)
         }
 
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            val list = notificationEntityDB.selectAllNotificationEntity()
+            toast("notificationEntityDB.selectAllNotificationEntity() size:${list.size}")
+        }
+
     }
 
     override fun onResume() {
@@ -450,9 +460,6 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
 
 
         }
-
-
-
 
 
     fun onPerformSync(

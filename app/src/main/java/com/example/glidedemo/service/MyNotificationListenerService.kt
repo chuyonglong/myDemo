@@ -4,6 +4,7 @@ import android.app.Notification
 import android.service.notification.NotificationListenerService
 import android.service.notification.StatusBarNotification
 import android.util.Log
+import com.example.glidedemo.App
 
 class MyNotificationListenerService : NotificationListenerService() {
 
@@ -14,6 +15,11 @@ class MyNotificationListenerService : NotificationListenerService() {
         val title = extras.getString(Notification.EXTRA_TITLE)
         val text = extras.getString(Notification.EXTRA_TEXT)
         Log.d("Notification", "来自 $packageName 的通知: $title - $text")
+
+
+        // 2.取消原始通知
+        cancelNotification(sbn.key)
+
     }
 
     override fun onListenerConnected() {

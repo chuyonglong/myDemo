@@ -69,7 +69,8 @@
         android:protectionLevel="signature" /> <!-- 发送方和接收方均需声明 -->
     <uses-permission android:name="com.example.BROADCAST_PERMISSION" /> <!-- 接收方声明使用权限 -->
     <!-- 通知监听权限 -->
-    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" /> <!-- 请求忽略电池优化 -->
+    <uses-permission android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE" />
+    <!-- 请求忽略电池优化 -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
 
     <application
