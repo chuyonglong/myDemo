@@ -18,6 +18,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.example.glidedemo.R
 import com.example.glidedemo.databinding.ActivityInstallBinding
 import com.example.glidedemo.databinding.FlowlayoutTextBinding
+import com.example.glidedemo.extensions.goOverlayPermissionSetting
 import com.example.glidedemo.extensions.goUsagePermissionSetting
 import com.example.glidedemo.extensions.toast
 import com.example.glidedemo.extensions.viewBindings
@@ -47,6 +48,7 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
             "1" to "1:应用安装/卸载广播",
             "2" to "2:请求通知监听权限",
             "3" to "3:禁用电池优化",
+            "4" to "4:请求应用上层权限",
         )
     }
 
@@ -114,6 +116,17 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
                 requestDisableBatteryOptimization(this)
             }
 
+            4 -> {
+                val hasOverlayPermission = PermissionUtil.checkOverlays(this)
+                if (hasOverlayPermission) {
+                    toast("应用上层权限已授权")
+                } else {
+                    toast("请求应用上层权限")
+                    goOverlayPermissionSetting(this, permissionOverlaysActivityResultLauncher)
+                }
+
+            }
+
         }
         return true
     }
@@ -124,13 +137,13 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
 
 
     private fun registerPackageReceiver() {
+        unregisterReceiver(appInstallReceiver)
         val intentFilter = IntentFilter().apply {
             addAction(Intent.ACTION_PACKAGE_ADDED)
             addAction(Intent.ACTION_PACKAGE_REMOVED)
             addAction(Intent.ACTION_PACKAGE_REPLACED)
             addDataScheme("package")
         }
-
         // 注册接收器
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             registerReceiver(appInstallReceiver, intentFilter, RECEIVER_EXPORTED)
@@ -144,7 +157,6 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
 
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(appInstallReceiver)
     }
 
 
@@ -156,6 +168,19 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
                     toast(getString(R.string.permission_request_result, "已授权"))
                 } else {
                     toast(getString(R.string.permission_request_result, "未授权"))
+                }
+            }
+
+        }
+
+    private val permissionOverlaysActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                val hasOverlayPermission = PermissionUtil.checkOverlays(this)
+                if (hasOverlayPermission) {
+                    toast(getString(R.string.permission_overlay_request_result, "已授权"))
+                } else {
+                    toast(getString(R.string.permission_overlay_request_result, "未授权"))
                 }
             }
 
@@ -235,4 +260,6 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
             toast("电池优化已禁用")
         }
     }
+
+
 }

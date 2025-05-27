@@ -3,6 +3,7 @@ package com.example.glidedemo.activity
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.WindowManager
 import androidx.activity.SystemBarStyle
@@ -20,7 +21,9 @@ class TransparentActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        Log.d("AppInstall", "onCreate: 透明activiity onCreate")
         binding
+        // 注释掉initView 就不显示壁纸 完全透明
         initView()
         onDemoBackPressed(true) {
             finish()
@@ -40,5 +43,4 @@ class TransparentActivity : AppCompatActivity() {
         val uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
         decorView.systemUiVisibility = uiOptions
     }
-
 }
