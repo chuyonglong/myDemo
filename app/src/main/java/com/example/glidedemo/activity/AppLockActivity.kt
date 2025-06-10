@@ -47,8 +47,9 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
             "0" to "0:查看使用情况权限",
             "1" to "1:应用安装/卸载广播",
             "2" to "2:请求通知监听权限",
-            "3" to "3:禁用电池优化",
+            "3" to "3:忽略电池优化",
             "4" to "4:请求应用上层权限",
+            "5" to "5:",
         )
     }
 
@@ -124,6 +125,9 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
                     toast("请求应用上层权限")
                     goOverlayPermissionSetting(this, permissionOverlaysActivityResultLauncher)
                 }
+            }
+
+            5 -> {
 
             }
 

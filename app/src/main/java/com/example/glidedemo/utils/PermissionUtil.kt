@@ -15,6 +15,14 @@ import androidx.fragment.app.FragmentActivity
 
 object PermissionUtil {
 
+    // 检测厂商品牌
+    private fun isXiaomi() = Build.MANUFACTURER.equals("xiaomi", ignoreCase = true)
+    private fun isHuawei() = Build.MANUFACTURER.equals("huawei", ignoreCase = true)
+    private fun isOppo() = Build.MANUFACTURER.equals("oppo", ignoreCase = true)
+    private fun isViVo() = Build.MANUFACTURER.equals("vivo", ignoreCase = true)
+    private fun isSamsung() = Build.MANUFACTURER.equals("samsung", ignoreCase = true)
+    private fun isHonor() = Build.MANUFACTURER.equals("honor", ignoreCase = true)
+
     /**
      * 允许查看使用情况
      */
