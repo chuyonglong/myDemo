@@ -5,6 +5,7 @@ import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -18,6 +19,7 @@ import androidx.core.app.NotificationManagerCompat
 import com.example.glidedemo.R
 import com.example.glidedemo.databinding.ActivityInstallBinding
 import com.example.glidedemo.databinding.FlowlayoutTextBinding
+import com.example.glidedemo.extensions.PERMISSION_STRING_TYPE
 import com.example.glidedemo.extensions.goOverlayPermissionSetting
 import com.example.glidedemo.extensions.goUsagePermissionSetting
 import com.example.glidedemo.extensions.toast
@@ -27,6 +29,7 @@ import com.example.glidedemo.utils.PermissionUtil
 import com.example.glidedemo.views.flowlayout.FlowLayout
 import com.example.glidedemo.views.flowlayout.TagAdapter
 import com.example.glidedemo.views.flowlayout.TagFlowLayout
+import androidx.core.net.toUri
 
 class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
     TagFlowLayout.OnSelectListener {
@@ -49,7 +52,7 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
             "2" to "2:请求通知监听权限",
             "3" to "3:忽略电池优化",
             "4" to "4:请求应用上层权限",
-            "5" to "5:",
+            "5" to "5:设置为默认启动器",
         )
     }
 
@@ -128,7 +131,7 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
             }
 
             5 -> {
-
+                setDefaultLauncher()
             }
 
         }
@@ -257,7 +260,7 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
             toast("请求禁用电池优化")
             val intent = Intent().apply {
                 action = Settings.ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
-                data = Uri.parse("package:$packageName")
+                data = "package:$packageName".toUri()
             }
             activity.startActivity(intent)
         } else {
@@ -265,5 +268,41 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
         }
     }
 
+    private fun setDefaultLauncher() {
+        try {
+            // 先启用HomeBootActivity
+            packageManager.setComponentEnabledSetting(
+                ComponentName(packageName, "com.example.glidedemo.activity.HomeBootActivity"),
+                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
+                PackageManager.DONT_KILL_APP
+            )
+
+            // 跳转到默认启动器设置页面
+            goDefaultLauncherSetting()
+
+
+        } catch (e: Exception) {
+            toast("无法打开启动器设置页面")
+        }
+    }
+
+
+
+
+
+    private fun goDefaultLauncherSetting() {
+        val intent = Intent(
+            this@AppLockActivity, PermissionSettingActivity::class.java
+        ).apply {
+            putExtra(PERMISSION_STRING_TYPE, Settings.ACTION_HOME_SETTINGS)
+        }
+        permissionDefaultLauncherActivityResultLauncher.launch(intent)
+    }
+
+    private val permissionDefaultLauncherActivityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+
+
+        }
 
 }
