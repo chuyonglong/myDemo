@@ -1,12 +1,13 @@
 package com.example.glidedemo.activity
 
 import android.app.Activity
+import android.app.role.RoleManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.net.Uri
+import android.content.pm.ResolveInfo
 import android.os.Build
 import android.os.Bundle
 import android.os.PowerManager
@@ -16,7 +17,9 @@ import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.net.toUri
 import com.example.glidedemo.R
+import com.example.glidedemo.adapter.LauncherListAdapter
 import com.example.glidedemo.databinding.ActivityInstallBinding
 import com.example.glidedemo.databinding.FlowlayoutTextBinding
 import com.example.glidedemo.extensions.PERMISSION_STRING_TYPE
@@ -26,16 +29,20 @@ import com.example.glidedemo.extensions.toast
 import com.example.glidedemo.extensions.viewBindings
 import com.example.glidedemo.receiver.AppInstallReceiver
 import com.example.glidedemo.utils.PermissionUtil
+import com.example.glidedemo.views.GalleryGridLayoutManager
 import com.example.glidedemo.views.flowlayout.FlowLayout
 import com.example.glidedemo.views.flowlayout.TagAdapter
 import com.example.glidedemo.views.flowlayout.TagFlowLayout
-import androidx.core.net.toUri
 
 class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
-    TagFlowLayout.OnSelectListener {
+    TagFlowLayout.OnSelectListener, LauncherListAdapter.OnLauncherClickListener {
     private val binding by viewBindings(ActivityInstallBinding::inflate)
 
     private val appInstallReceiver = AppInstallReceiver()
+
+    private val launcherListAdapter by lazy {
+        LauncherListAdapter(this)
+    }
 
     // 检测厂商品牌
     private fun isXiaomi() = Build.MANUFACTURER.equals("xiaomi", ignoreCase = true)
@@ -53,6 +60,8 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
             "3" to "3:忽略电池优化",
             "4" to "4:请求应用上层权限",
             "5" to "5:设置为默认启动器",
+            "6" to "6:设置为默认启动器弹窗",
+            "7" to "7:获取主屏幕应用",
         )
     }
 
@@ -134,8 +143,56 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
                 setDefaultLauncher()
             }
 
+            6 -> {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                    val roleManager = getSystemService(RoleManager::class.java)
+                    val isRoleAvailable = roleManager.isRoleAvailable(RoleManager.ROLE_HOME)
+
+                    if (isRoleAvailable) {
+                        val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_HOME)
+                        activityResultLauncher.launch(intent)
+                    }
+                }
+
+            }
+
+            7 -> {
+                val homeLaunchers = getAllHomeLaunchers(this)
+                if (homeLaunchers.isNotEmpty()) {
+                    val launcherNames = homeLaunchers.joinToString(", ") {
+                        it.activityInfo.loadLabel(packageManager).toString()
+                    }
+                    toast("主屏幕应用: $launcherNames")
+
+                    binding.launcherAppList.adapter = launcherListAdapter
+                    binding.launcherAppList.layoutManager = GalleryGridLayoutManager(this, 3)
+                    launcherListAdapter.setOnLauncherClickListener(this)
+                    launcherListAdapter.addLauncherList(homeLaunchers.toMutableList())
+                } else {
+                    toast("没有找到主屏幕应用")
+                }
+
+            }
+
         }
         return true
+    }
+
+
+    private val activityResultLauncher =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        }
+
+
+    private fun getAllHomeLaunchers(context: Context): List<ResolveInfo> {
+        val intent = Intent(Intent.ACTION_MAIN).apply {
+            addCategory(Intent.CATEGORY_HOME)
+        }
+        val list = context.packageManager.queryIntentActivities(intent, 0)
+        val finalList =list.filter {
+            it.activityInfo.packageName != "com.android.settings"
+        }
+        return finalList
     }
 
     private fun initView() {
@@ -287,9 +344,6 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
     }
 
 
-
-
-
     private fun goDefaultLauncherSetting() {
         val intent = Intent(
             this@AppLockActivity, PermissionSettingActivity::class.java
@@ -304,5 +358,23 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
 
 
         }
+
+    override fun onLauncherClick(resolveInfo: ResolveInfo) {
+        launchApp(resolveInfo)
+    }
+
+
+    private fun launchApp(resolveInfo: ResolveInfo) {
+        val componentName = ComponentName(
+            resolveInfo.activityInfo.packageName,
+            resolveInfo.activityInfo.name
+        )
+        val intent = Intent(Intent.ACTION_MAIN).apply {
+            addCategory(Intent.CATEGORY_LAUNCHER)
+            component = componentName
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        startActivity(intent)
+    }
 
 }
