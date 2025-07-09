@@ -1,5 +1,6 @@
 package com.example.glidedemo.activity
 
+import android.Manifest
 import android.app.Activity
 import android.app.role.RoleManager
 import android.content.ComponentName
@@ -16,6 +17,7 @@ import android.util.Log
 import android.view.View
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.net.toUri
 import com.example.glidedemo.R
@@ -28,6 +30,7 @@ import com.example.glidedemo.extensions.goUsagePermissionSetting
 import com.example.glidedemo.extensions.toast
 import com.example.glidedemo.extensions.viewBindings
 import com.example.glidedemo.receiver.AppInstallReceiver
+import com.example.glidedemo.utils.AppUtils
 import com.example.glidedemo.utils.PermissionUtil
 import com.example.glidedemo.views.GalleryGridLayoutManager
 import com.example.glidedemo.views.flowlayout.FlowLayout
@@ -36,6 +39,9 @@ import com.example.glidedemo.views.flowlayout.TagFlowLayout
 
 class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
     TagFlowLayout.OnSelectListener, LauncherListAdapter.OnLauncherClickListener {
+        private val TAG = "AppLockActivity"
+        
+        
     private val binding by viewBindings(ActivityInstallBinding::inflate)
 
     private val appInstallReceiver = AppInstallReceiver()
@@ -62,6 +68,8 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
             "5" to "5:设置为默认启动器",
             "6" to "6:设置为默认启动器弹窗",
             "7" to "7:获取主屏幕应用",
+            "8" to "8:监听应用卸载",
+            "9" to "9:获取通知权限",
         )
     }
 
@@ -140,6 +148,11 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
             }
 
             5 -> {
+                val oldActivityInfo = AppUtils.getCurrentLauncher(this)
+                if(oldActivityInfo == null){
+                    Log.d(TAG, "onTagClick: 未获取到老的launcher信息")
+                }
+                AppUtils.oldActivityInfo = oldActivityInfo
                 setDefaultLauncher()
             }
 
@@ -174,9 +187,36 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
 
             }
 
+            8 -> {}
+            9 -> {
+                val permissionGranted =
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // Android 13+
+                        ActivityCompat.checkSelfPermission(
+                            this, Manifest.permission.POST_NOTIFICATIONS
+                        ) == PackageManager.PERMISSION_GRANTED
+                    } else {
+                        val notificationManager = NotificationManagerCompat.from(this)
+                        notificationManager.areNotificationsEnabled()
+                    }
+                if (!permissionGranted) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        postNotificationLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+                    }
+                }
+            }
+
         }
         return true
     }
+
+
+    /**
+     * 通知栏权限
+     */
+    private val postNotificationLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { _ ->
+
+        }
 
 
     private val activityResultLauncher =
@@ -189,7 +229,7 @@ class AppLockActivity : AppCompatActivity(), TagFlowLayout.OnTagClickListener,
             addCategory(Intent.CATEGORY_HOME)
         }
         val list = context.packageManager.queryIntentActivities(intent, 0)
-        val finalList =list.filter {
+        val finalList = list.filter {
             it.activityInfo.packageName != "com.android.settings"
         }
         return finalList

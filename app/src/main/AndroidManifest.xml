@@ -26,7 +26,9 @@
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.RECEIVE_MMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" /> <!-- 相机权限 -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+
+    <!-- 相机权限 -->
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CAMERA" />
     <uses-permission android:name="android.permission.ACTIVITY_RECOGNITION" />
@@ -41,10 +43,12 @@
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_PHONE_CALL" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SPECIAL_USE" />
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED" /> <!-- <uses-permission android:name="android.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND" /> -->
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_SYSTEM_EXEMPTED" />
+    <!-- <uses-permission android:name="android.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND" /> -->
     <uses-permission android:name="android.permission.REQUEST_COMPANION_START_FOREGROUND_SERVICES_FROM_BACKGROUND" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_CONNECTED_DEVICE" />
-    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" /> <!-- <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> -->
+    <uses-permission android:name="android.permission.BLUETOOTH_ADVERTISE" />
+    <!-- <uses-permission android:name="android.permission.BLUETOOTH_CONNECT" /> -->
     <!-- <uses-permission android:name="android.permission.BLUETOOTH_SCAN" /> -->
     <!-- <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" /> -->
     <!-- <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> -->
@@ -53,26 +57,50 @@
     <!-- <uses-permission android:name="android.permission.TRANSMIT_IR" /> -->
     <uses-permission android:name="android.permission.UWB_RANGING" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
-    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" /> <!-- 外部提供的自定义权限 -->
-    <uses-permission android:name="zero.permission.main" /> <!-- 提供给外部的自定义权限 -->
-    <permission android:name="aa.permission.aa" /> <!-- 网络权限 appsflyer -->
+
+    <!--全屏通知    -->
+    <uses-permission android:name="android.permission.USE_FULL_SCREEN_INTENT" />
+
+    <!-- 外部提供的自定义权限 -->
+    <uses-permission android:name="zero.permission.main" />
+
+
+    <!-- 提供给外部的自定义权限 -->
+    <permission android:name="aa.permission.aa" />
+
+    <!-- 网络权限 appsflyer -->
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+
+    <!-- 查看app 使用情况 -->
     <uses-permission
         android:name="android.permission.PACKAGE_USAGE_STATS"
-        tools:ignore="ProtectedPermissions" /> <!-- 查看app 使用情况 -->
+        tools:ignore="ProtectedPermissions" />
+
+
+    <!-- 查询所有app -->
     <uses-permission
         android:name="android.permission.QUERY_ALL_PACKAGES"
-        tools:ignore="QueryAllPackagesPermission" /> <!-- 查询所有app -->
+        tools:ignore="QueryAllPackagesPermission" />
+
+    <!-- 发送方和接收方均需声明 -->
     <permission
         android:name="com.example.BROADCAST_PERMISSION"
-        android:protectionLevel="signature" /> <!-- 发送方和接收方均需声明 -->
-    <uses-permission android:name="com.example.BROADCAST_PERMISSION" /> <!-- 接收方声明使用权限 -->
+        android:protectionLevel="signature" />
+
+    <!-- 接收方声明使用权限 -->
+    <uses-permission android:name="com.example.BROADCAST_PERMISSION" />
+
+
     <!-- 通知监听权限 -->
     <uses-permission
         android:name="android.permission.BIND_NOTIFICATION_LISTENER_SERVICE"
         tools:ignore="ProtectedPermissions" /> <!-- 请求忽略电池优化 -->
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+
+    <!--后台启动activity-->
+    <uses-permission android:name="android.permission.START_ACTIVITIES_FROM_BACKGROUND" />
 
     <application
         android:name=".App"
@@ -87,6 +115,9 @@
         android:theme="@style/AppTheme"
         tools:replace="android:fullBackupContent,android:dataExtractionRules,android:allowBackup"
         tools:targetApi="31">
+        <activity
+            android:name=".activity.HomeScreenActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.AppInstallDialogActivity"
             android:exported="false"
@@ -244,7 +275,6 @@
             android:screenOrientation="fullSensor"
             android:taskAffinity="kjv.bible.kingjamesbible.notify"
             android:theme="@style/Theme.OverlayApply" />
-
         <activity android:name=".activity.ThemeActivity" />
         <activity
             android:name=".activity.ImageClassificationInterpreterActivity"
@@ -282,7 +312,6 @@
             android:screenOrientation="portrait"
             android:taskAffinity="com.bible.text.notify"
             android:theme="@style/PopupStyleActivityTheme" /> <!-- 无障碍 -->
-
         <activity
             android:name=".activity.HomeBootActivity"
             android:exported="true"
@@ -294,11 +323,8 @@
                 <category android:name="android.intent.category.HOME" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
-        </activity>
-
-        <!--        <category android:name="android.intent.category.MONKEY" />-->
-        <!--        <category android:name="android.intent.category.LAUNCHER_APP" />-->
-
+        </activity> <!-- <category android:name="android.intent.category.MONKEY" /> -->
+        <!-- <category android:name="android.intent.category.LAUNCHER_APP" /> -->
         <service
             android:name=".service.MyAccessibilityService"
             android:enabled="true"
