@@ -20,7 +20,7 @@ import com.example.glidedemo.extensions.ACTION_ACTIVITY_TO_SERVICE
 import com.example.glidedemo.extensions.ACTION_SERVICE_TO_ACTIVITY
 
 class MyAccessibilityService : AccessibilityService() {
-
+    private val TAG = "MyAccessibilityService"
     private val lastClickTimes = mutableMapOf<String, Long>() // 存储不同按钮的上次点击时间
     private var currentPackages = mutableSetOf<String>() // 本地维护当前监听的包名
 
@@ -104,6 +104,13 @@ class MyAccessibilityService : AccessibilityService() {
         node ?: return
 
         try {
+            if (isStopButton(node)) {
+                Log.d(TAG, "findAndClickClearCacheButton: 点击停止按钮")
+                val name = node.text?.toString() ?: ""
+                safePerformClick(node, name)
+                return
+            }
+
             // 检查是否是“存储”入口
             if (isStorageEntry(node)) {
                 Log.d("Accessibility", "进入存储设置")
@@ -141,6 +148,11 @@ class MyAccessibilityService : AccessibilityService() {
         return node.viewIdResourceName?.contains("storage_settings") == true || nodeText.contains("存储空间和缓存") || nodeText.contains(
             "存储占用"
         )
+    }
+
+    private fun isStopButton(node: AccessibilityNodeInfo): Boolean {
+        val nodeText = node.text?.toString() ?: ""
+        return nodeText.contains("强行停止")
     }
 
     private fun isClearCacheButton(node: AccessibilityNodeInfo): Boolean {

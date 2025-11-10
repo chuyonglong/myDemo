@@ -33,6 +33,7 @@ import io.appmetrica.analytics.AppMetrica
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.Calendar
+import kotlin.jvm.java
 
 
 class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
@@ -52,7 +53,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             "6" to "6:点赞",
             "7" to "7:room数据库",
             "8" to "8:主屏幕应用相关",
-            "9" to "9:",
+            "9" to "9:前台服务和activity的关系",
             "10" to "10:setresult",
             "11" to "11:",
             "12" to "12:",
@@ -135,6 +136,7 @@ class MainActivity : BaseActivity(), TagFlowLayout.OnTagClickListener,
             }
 
             9 -> {
+                startActivity(Intent(this, ListenActActivity::class.java))
             }
 
             10 -> {

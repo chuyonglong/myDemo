@@ -4,12 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.util.AttributeSet
-import android.util.Log
 import androidx.core.content.ContextCompat.getColor
 import androidx.recyclerview.widget.RecyclerView
 import com.example.glidedemo.R
-import com.example.glidedemo.views.pinlockview.PinLockAdapter.OnDeleteClickListener
-import com.example.glidedemo.views.pinlockview.PinLockAdapter.OnNumberClickListener
 import com.example.glidedemo.views.pinlockview.ResourceUtils.Companion.getDimensionInPx
 
 
@@ -36,7 +33,8 @@ class PinLockView : RecyclerView {
         CustomizationOptionsBundle()
     }
 
-    private val mOnNumberClickListener: OnNumberClickListener = object : OnNumberClickListener {
+    private val mOnNumberClickListener: PinLockAdapter.OnNumberClickListener = object :
+        PinLockAdapter.OnNumberClickListener {
         override fun onNumberClicked(keyValue: Int) {
             if (mPin.length < mPinLength) {
                 mPin += keyValue.toString()
@@ -67,16 +65,14 @@ class PinLockView : RecyclerView {
         }
     }
 
-    private val mOnDeleteClickListener: OnDeleteClickListener = object : OnDeleteClickListener {
+    private val mOnDeleteClickListener: PinLockAdapter.OnDeleteClickListener = object :
+        PinLockAdapter.OnDeleteClickListener {
         override fun onDeleteClicked() {
             if (mPin.isNotEmpty()) {
                 mPin = mPin.substring(0, mPin.length - 1)
                 mIndicatorDots?.updateDot(mPin.length)
-                if (mPin.isEmpty()) {
-                    mAdapter.pinLength = mPin.length
-                    mAdapter.notifyItemChanged(mAdapter.itemCount - 1)
-                }
-
+                mAdapter.pinLength = mPin.length
+                mAdapter.notifyItemChanged(mAdapter.itemCount - 1)
                 if (mPin.isEmpty()) {
                     mPinLockListener?.onEmpty()
                     clearInternalPin()
@@ -115,15 +111,14 @@ class PinLockView : RecyclerView {
 
         try {
             mPinLength = typedArray.getInt(R.styleable.PinLockView_pinLength, DEFAULT_PIN_LENGTH)
-            Log.d("223366", "init:----:$mPinLength ")
             mHorizontalSpacing = typedArray.getDimension(
                 R.styleable.PinLockView_keypadHorizontalSpacing, getDimensionInPx(
-                    context, R.dimen.default_horizontal_spacing
+                    context, R.dimen.dp_32
                 )
             ).toInt()
             mVerticalSpacing = typedArray.getDimension(
                 R.styleable.PinLockView_keypadVerticalSpacing, getDimensionInPx(
-                    context, R.dimen.default_vertical_spacing
+                    context, R.dimen.dp_0
                 )
             ).toInt()
             mTextColor = typedArray.getColor(
@@ -133,17 +128,17 @@ class PinLockView : RecyclerView {
             )
             mTextSize = typedArray.getDimension(
                 R.styleable.PinLockView_keypadTextSize, getDimensionInPx(
-                    context, R.dimen.default_text_size
+                    context, R.dimen.sp_16
                 )
             ).toInt()
             mButtonSize = typedArray.getDimension(
                 R.styleable.PinLockView_keypadButtonSize, getDimensionInPx(
-                    context, R.dimen.default_button_size
+                    context, R.dimen.dp_60
                 )
             ).toInt()
             mDeleteButtonSize = typedArray.getDimension(
                 R.styleable.PinLockView_keypadDeleteButtonSize, getDimensionInPx(
-                    context, R.dimen.default_delete_button_size
+                    context, R.dimen.dp_16
                 )
             ).toInt()
             mButtonBackgroundDrawable =
@@ -181,7 +176,7 @@ class PinLockView : RecyclerView {
         mAdapter.customizationOptions = mCustomizationOptionsBundle
         adapter = mAdapter
 
-        addItemDecoration(ItemSpaceDecoration(mHorizontalSpacing, mVerticalSpacing, 3, false))
+//        addItemDecoration(ItemSpaceDecoration(mHorizontalSpacing, mVerticalSpacing, 3, false))
         overScrollMode = OVER_SCROLL_NEVER
     }
 
@@ -279,9 +274,7 @@ class PinLockView : RecyclerView {
     }
 
     fun errorDots() {
-        if (mIndicatorDots != null) {
-            mIndicatorDots!!.errorDot()
-        }
+        mIndicatorDots?.errorDot()
     }
 
     companion object {

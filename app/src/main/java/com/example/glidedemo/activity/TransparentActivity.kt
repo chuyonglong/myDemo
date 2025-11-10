@@ -33,14 +33,14 @@ class TransparentActivity : AppCompatActivity() {
 
     private fun initView() {
         // 显示壁纸
-        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER)
-        // 隐藏通知栏
-        window.setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
-        )
-        // 隐藏导航栏
-        val decorView = window.decorView
-        val uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
-        decorView.systemUiVisibility = uiOptions
+//        window.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WALLPAPER)
+//        // 隐藏通知栏
+//        window.setFlags(
+//            WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN
+//        )
+//        // 隐藏导航栏
+//        val decorView = window.decorView
+//        val uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION or View.SYSTEM_UI_FLAG_FULLSCREEN
+//        decorView.systemUiVisibility = uiOptions
     }
 }

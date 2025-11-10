@@ -2,9 +2,12 @@ package com.example.glidedemo.extensions
 
 import android.content.Context
 import android.content.Intent
+import android.content.pm.PackageManager
+import android.content.pm.ResolveInfo
 import android.graphics.Color
 import android.media.MediaScannerConnection
 import android.net.Uri
+import android.os.Build
 import android.provider.Settings
 import android.view.LayoutInflater
 import androidx.activity.ComponentActivity
@@ -100,6 +103,26 @@ fun AppCompatActivity.goOverlayPermissionSetting(
         )
     }
     activityResultLauncher.launch(intent)
+}
+
+
+
+fun AppCompatActivity.getAppInfoList(context: Context, pkg: String? = null): List<ResolveInfo> {
+    val intent = Intent()
+    intent.addCategory(Intent.CATEGORY_LAUNCHER)
+    intent.action = Intent.ACTION_MAIN
+    if (null != pkg) {
+        intent.setPackage(pkg)
+    }
+    val pkgManager = context.packageManager ?: return emptyList()
+    if (Build.VERSION.SDK_INT >= 30) {
+        return pkgManager.queryIntentActivities(
+            intent, PackageManager.MATCH_UNINSTALLED_PACKAGES
+        )
+    }
+    return pkgManager.queryIntentActivities(
+        intent, PackageManager.GET_UNINSTALLED_PACKAGES
+    )
 }
 
 

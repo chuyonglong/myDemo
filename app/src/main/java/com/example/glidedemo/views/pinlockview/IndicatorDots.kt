@@ -44,11 +44,11 @@ class IndicatorDots @JvmOverloads constructor(
         try {
             mDotDiameter = typedArray.getDimension(
                 R.styleable.PinLockView_dotDiameter,
-                getDimensionInPx(getContext(), R.dimen.default_dot_diameter)
+                getDimensionInPx(getContext(), R.dimen.dp_8)
             ).toInt()
             mDotSpacing = typedArray.getDimension(
                 R.styleable.PinLockView_dotSpacing,
-                getDimensionInPx(getContext(), R.dimen.default_dot_spacing)
+                getDimensionInPx(getContext(), R.dimen.dp_8)
             ).toInt()
             mFillDrawable = typedArray.getResourceId(
                 R.styleable.PinLockView_dotFilledBackground,

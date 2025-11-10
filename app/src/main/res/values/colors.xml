@@ -22,4 +22,49 @@
     <color name="md_theme_primary_light">#BB86FC</color> <!-- 明亮模式下的主颜色 -->
     <color name="notification_text_color">#000000</color>
 
+
+
+    <color name="color_bg">#828282</color>
+    <color name="pomegranate">#f4511e</color>
+    <color name="lock_inner">#FFFFFF</color>
+    <color name="intruder_button">#BCD7FF</color>
+    <color name="lock_out">#80B3D2FF</color>
+
+    <color name="evaluation_click">#3184FF</color>
+    <color name="evaluation_not_click">#CBCBCB</color>
+
+
+    <!-- 浅绿色 -->
+    <color name="pale_green">#C5F4D3</color>
+    <!-- 浅粉色（类似腮红） -->
+    <color name="pale_pink">#FFD5D5</color>
+
+    <!-- 冰蓝色（类似天空蓝） -->
+    <color name="ice_blue">#E1ECFE</color>
+
+    <!-- 柔光珊瑚色（浅橙粉色调） -->
+    <color name="soft_coral">#FEEBD6</color>
+
+    <!-- 奶油黄（类似香草冰淇淋） -->
+    <color name="cream_yellow">#FFF2BD</color>
+
+    <!-- 淡薰衣草紫（低饱和度紫色） -->
+    <color name="lavender_mist">#E8D7FF</color>
+
+    <!-- 糖果粉（明亮粉色） -->
+    <color name="candy_pink">#FFD1EC</color>
+
+
+    <color name="notification_background_color">#ffffff</color>
+
+
+
+    <color name="color_F75A5A">#F75A5A</color>
+    <color name="color_FEA63C">#FEA63C</color>
+    <color name="color_00A6FF">#00A6FF</color>
+    <color name="color_3184FF">#3184FF</color>
+    <color name="color_E89623">#E89623</color>
+    <color name="color_0091DF">#0091DF</color>
+    <color name="color_333333">#333333</color>
+
 </resources>

@@ -11,7 +11,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.glidedemo.adapter.AppCacheListAdapter
 import com.example.glidedemo.databinding.ActivityCleaningTrashBinding
+import com.example.glidedemo.entity.AppCacheData
 import com.example.glidedemo.extensions.PERMISSION_STRING_TYPE
+import com.example.glidedemo.extensions.getAppInfoList
 import com.example.glidedemo.extensions.goUsagePermissionSetting
 import com.example.glidedemo.extensions.toast
 import com.example.glidedemo.extensions.viewBindings
@@ -74,11 +76,18 @@ class CleaningTrashActivity : AppCompatActivity(), AppCacheListAdapter.OnItemCli
     }
 
     private fun getCacheData() {
-        val list = AppCacheQuery.getAllAppCache(this)
-        if (list.isEmpty()) {
+        val appList = AppCacheQuery.getAllAppCache(this)
+//        val list = getAppInfoList(this)
+//        val appList = mutableListOf<AppCacheData>()
+//        for (item in list) {
+//            val data = item.activityInfo
+//            val appCacheData = AppCacheData(data.packageName, data.name, 0L, 0L, 0L, 0L, false)
+//            appList.add(appCacheData)
+//        }
+        if (appList.isEmpty()) {
             toast("没有缓存数据")
         }
-        appCacheListAdapter.addCacheData(list)
+        appCacheListAdapter.addCacheData(appList)
         appCacheListAdapter.setOnItemClickCallback(this)
     }
 
@@ -94,7 +103,7 @@ class CleaningTrashActivity : AppCompatActivity(), AppCacheListAdapter.OnItemCli
             toast("权限已经获取")
             binding.permissionText.text = "权限已经获取"
         } else {
-             goUsagePermissionSetting(this,permissionUsageAccessActivityResultLauncher)
+            goUsagePermissionSetting(this, permissionUsageAccessActivityResultLauncher)
         }
 
     }
